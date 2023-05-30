@@ -1,0 +1,6 @@
+# nucleo-f401re-isl94202
+- LED - PA5
+- USART1_TX - PA2
+- USART1_RX - PA3
+- I2C_SCL - PB8
+- I2C_SDA - PB9
