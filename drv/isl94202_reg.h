@@ -208,48 +208,6 @@
 #define ISL94202_CELL_Pos (0x8U)
 #define ISL94202_CELL_Msk (0xFFU << ISL94202_CELL_Pos)
 
-// Setup 0
-#define ISL94202_SETUP0 (0x4AU)
-// Open-Wire PSD
-#define ISL94202_SETUP0_OWPSD_Pos (0x0U)
-#define ISL94202_SETUP0_OWPSD_Msk (0x1U << ISL94202_SETUP0_OWPSD_Pos)
-// Disable Open-Wire-Scan
-#define ISL94202_SETUP0_DOWD_Pos (0x1U)
-#define ISL94202_SETUP0_DOWD_Msk (0x1U << ISL94202_SETUP0_DOWD_Pos)
-// Precharge FET Enable
-#define ISL94202_SETUP0_PCFETE_Pos (0x2U)
-#define ISL94202_SETUP0_PCFETE_Msk (0x1U << ISL94202_SETUP0_PCFETE_Pos)
-// External Temp Gain
-#define ISL94202_SETUP0_TGAIN_Pos (0x4U)
-#define ISL94202_SETUP0_TGAIN_Msk (0x1U << ISL94202_SETUP0_TGAIN_Pos)
-// xTemp2 Mode Control
-#define ISL94202_SETUP0_XT2M_Pos (0x5U)
-#define ISL94202_SETUP0_XT2M_Msk (0x1U << ISL94202_SETUP0_XT2M_Pos)
-// Cell fail PSD
-#define ISL94202_SETUP0_CFPSD_Pos (0x7U)
-#define ISL94202_SETUP0_CFPSD_Msk (0x1U << ISL94202_SETUP0_CFPSD_Pos)
-
-// Setup 1
-#define ISL94202_SETUP1 (0x4BU)
-// Enable CBAL during EOC
-#define ISL94202_SETUP1_CB_EOC_Pos (0x0U)
-#define ISL94202_SETUP1_CB_EOC_Msk (0x1U << ISL94202_SETUP1_CB_EOC_Pos)
-// Enable UVLO Power-Down
-#define ISL94202_SETUP1_UVLOPD_Pos (0x3U)
-#define ISL94202_SETUP1_UVLOPD_Msk (0x1U << ISL94202_SETUP1_UVLOPD_Pos)
-// CFET on during OV (Discharging)
-#define ISL94202_SETUP1_DFODOV_Pos (0x4U)
-#define ISL94202_SETUP1_DFODOV_Msk (0x1U << ISL94202_SETUP1_DFODOV_Pos)
-// DFET on during UV (Charging)
-#define ISL94202_SETUP1_DFODUV_Pos (0x5U)
-#define ISL94202_SETUP1_DFODUV_Msk (0x1U << ISL94202_SETUP1_DFODUV_Pos)
-// CB during Charge
-#define ISL94202_SETUP1_CBDC_Pos (0x6U)
-#define ISL94202_SETUP1_CBDC_Msk (0x1U << ISL94202_SETUP1_CBDC_Pos)
-// CB during Discharge
-#define ISL94202_SETUP1_CBDD_Pos (0x7U)
-#define ISL94202_SETUP1_CBDD_Msk (0x1U << ISL94202_SETUP1_CBDD_Pos)
-
 // RAM registers
 
 static const uint16_t OCD_Thresholds[] = { 4, 8, 16, 24, 32, 48, 64, 96 }; // mV
@@ -267,6 +225,164 @@ static const uint16_t ISL94202_Current_Gain[] = { 50, 5, 500, 500 };
 #define ISL94202_DELAY_MIN (3U)
 
 ////////////////
+
+// Cell Balance Minimum Voltage
+#define REG_ISL94202_CBMIN              0x1C
+#define ISL94202_CBMIN                  0x0
+#define ISL94202_CBMIN_MASK             (0xFFF << ISL94202_CBMIN)
+
+// Cell Balance Maximum Voltage
+#define REG_ISL94202_CBMAX              0x1E
+#define ISL94202_CBMAX                  0x0
+#define ISL94202_CBMAX_MASK             (0xFFF << ISL94202_CBMAX)
+
+// Cell Balance Minimum Delta Voltage
+#define REG_ISL94202_CBMIND             0x20
+#define ISL94202_CBMIND                 0x0
+#define ISL94202_CBMIND_MASK            (0xFFF << ISL94202_CBMIND)
+
+// Cell Balance Maximum Delta Voltage
+#define REG_ISL94202_CBMAXD             0x22
+#define ISL94202_CBMAXD                 0x0
+#define ISL94202_CBMAXD_MASK            (0xFFF << ISL94202_CBMAXD)
+
+//  Cell Balance On-Time
+#define REG_ISL94202_CBON               0x24
+#define ISL94202_CBON                   0x0 // Cell Balance On Time
+#define ISL94202_CBON_MASK              (0x3FF << ISL94202_CBON)
+#define ISL94202_CBONU                  0x2 // Cell Balance On Time Unit
+#define ISL94202_CBONU_MASK             (0x3 << ISL94202_CBONU)
+
+// Cell Balance Off-Time
+#define REG_ISL94202_CBOFF              0x26
+#define ISL94202_CBOFF                  0x0 // Cell Balance Off Time
+#define ISL94202_CBOFF_MASK             (0x3FF << ISL94202_CBOFF)
+#define ISL94202_CBOFFU                 0x2 // Cell Balance Off Time Unit
+#define ISL94202_CBOFFU_MASK            (0x3 << ISL94202_CBOFFU)
+
+// Cell Balance Under-Temperature Limit
+#define REG_ISL94202_CBUT               0x28
+#define ISL94202_CBUT                   0x0
+#define ISL94202_CBUT_MASK              (0xFFF << ISL94202_CBUT)
+
+// Cell Balance Under-Temperature Recovery Level
+#define REG_ISL94202_CBUTR              0x2A
+#define ISL94202_CBUTR                  0x0
+#define ISL94202_CBUTR_MASK             (0xFFF << ISL94202_CBUTR)
+
+// Cell Balance Over-Temperature Limit
+#define REG_ISL94202_CBOT               0x2C
+#define ISL94202_CBOT                   0x0
+#define ISL94202_CBOT_MASK              (0xFFF << ISL94202_CBOT)
+
+// Cell Balance Over-Temperature Recovery Level
+#define REG_ISL94202_CBOTR              0x2E
+#define ISL94202_CBOTR                  0x0
+#define ISL94202_CBOTR_MASK             (0xFFF << ISL94202_CBOTR)
+
+// Charge Over-Temperature Limit
+#define REG_ISL94202_COT                0x30
+#define ISL94202_COT                    0x0
+#define ISL94202_COT_MASK               (0xFFF << ISL94202_COT)
+
+// Charge Over-Temperature Recovery Level
+#define REG_ISL94202_COTR               0x32
+#define ISL94202_COTR                   0x0
+#define ISL94202_COTR_MASK              (0xFFF << ISL94202_COTR)
+
+// Charge Under-Temperature Limit
+#define REG_ISL94202_CUT                0x34
+#define ISL94202_CUT                    0x0
+#define ISL94202_CUT_MASK               (0xFFF << ISL94202_CUT)
+
+// Charge Under-Temperature Recovery Level
+#define REG_ISL94202_CUTR               0x36
+#define ISL94202_CUTR                   0x0
+#define ISL94202_CUTR_MASK              (0xFFF << ISL94202_CUTR)
+
+// Discharge Over-Temperature Voltage
+#define REG_ISL94202_DOT                0x38
+#define ISL94202_DOT                    0x0
+#define ISL94202_DOT_MASK               (0xFFF << ISL94202_DOT)
+
+// Discharge Over-Temperature Recovery Level
+#define REG_ISL94202_DOTR               0x3A
+#define ISL94202_DOTR                   0x0
+#define ISL94202_DOTR_MASK              (0xFFF << ISL94202_DOTR)
+
+// Discharge Under-Temperature Limit
+#define REG_ISL94202_DUT                0x3C
+#define ISL94202_DUT                    0x0
+#define ISL94202_DUT_MASK               (0xFFF << ISL94202_DUT)
+
+// Discharge Under-Temperature Recovery Voltage
+#define REG_ISL94202_DUTR               0x3E
+#define ISL94202_DUTR                   0x0
+#define ISL94202_DUTR_MASK              (0xFFF << ISL94202_DUTR)
+
+// Internal Over-Temperature Voltage Limit  
+#define REG_ISL94202_IOT                0x40
+#define ISL94202_IOT                    0x0
+#define ISL94202_IOT_MASK               (0xFFF << ISL94202_IOT)
+
+// Internal Over-Temperature Recovery Voltage
+#define REG_ISL94202_IOTR               0x42
+#define ISL94202_IOTR                   0x0
+#define ISL94202_IOTR_MASK              (0xFFF << ISL94202_IOTR)
+
+// Sleep Level Voltage
+#define REG_ISL94202_SLV                0x44
+#define ISL94202_SLV                    0x0
+#define ISL94202_SLV_MASK               (0xFFF << ISL94202_SLV)
+
+// Watchdog Timer and Sleep Delay Timer
+#define REG_ISL94202_SLT_WDT            0x46
+#define ISL94202_SLT_WDT_SLT            0x0 // Sleep Level Timer
+#define ISL94202_SLT_WDT_SLT_MASK       (0x1FF << ISL94202_SLT_WDT_SLT)
+#define ISL94202_SLT_WDT_SDTU           0x1 // Sleep Level Timer Unit selection
+#define ISL94202_SLT_WDT_SDTU_MASK      (0x3 << ISL94202_SLT_WDT_SDTU)
+#define ISL94202_SLT_WDT_SDTU           0x3 // Watchdog Timer prevents
+#define ISL94202_SLT_WDT_SDTU_MASK      (0x1F << ISL94202_SLT_WDT_SDTU)
+
+// Cell Select (Enable) - R/W
+#define REG_ISL94202_MODE_TIMER         0x48
+#define ISL94202_MOD_DOZE               0x0 // IDLE/DOZE Timer
+#define ISL94202_MOD_DOZE_MASK          (0xF << ISL94202_MOD_DOZE)
+#define ISL94202_MOD_SLEEP              0x4 // SLEEP Timer
+#define ISL94202_MOD_SLEEP_MASK         (0xF << ISL94202_MOD_SLEEP)
+
+// Cell Select (Enable) - R/W
+#define REG_ISL94202_CELL_SEL           0x49
+
+// Setup 0 - R/W
+#define REG_ISL94202_SETUP0             0x4A
+#define ISL94202_SETUP0_OWPSD           0x0 // Open Wire Pack Shutdown
+#define ISL94202_SETUP0_OWPSD_MASK      (0x1 << ISL94202_SETUP0_OWPSD)
+#define ISL94202_SETUP0_DOWD            0x1 // Disable Open Wire Detection
+#define ISL94202_SETUP0_DOWD_MASK       (0x1 << ISL94202_SETUP0_DOWD)
+#define ISL94202_SETUP0_PCFETE          0x2 // Pre-Charge FET Enable
+#define ISL94202_SETUP0_PCFETE_MASK     (0x1 << ISL94202_SETUP0_PCFETE)
+#define ISL94202_SETUP0_TGAIN           0x4 // Temperature Gain
+#define ISL94202_SETUP0_TGAIN_MASK      (0x1 << ISL94202_SETUP0_TGAIN)
+#define ISL94202_SETUP0_XT2M            0x5 //  Second External Temperature Monitor
+#define ISL94202_SETUP0_XT2M_MASK       (0x1 << ISL94202_SETUP0_XT2M)
+#define ISL94202_SETUP0_CFPSD           0x7 // Cell Fail Pack Shutdown
+#define ISL94202_SETUP0_CFPSD_MASK      (0x1 << ISL94202_SETUP0_CFPSD)
+
+// Setup 1 - R/W
+#define REG_ISL94202_SETUP1             0x4B
+#define ISL94202_SETUP1_CB_EOC          0x0 // Cell Balance During End-of-Charge
+#define ISL94202_SETUP1_CB_EOC_MASK     (0x1 << ISL94202_SETUP1_CB_EOC)
+#define ISL94202_SETUP1_UVLOPD          0x3 // Undervoltage Lockout Powerdown
+#define ISL94202_SETUP1_UVLOPD_MASK     (0x1 << ISL94202_SETUP1_UVLOPD)
+#define ISL94202_SETUP1_DFODOV          0x4 // CFET On During Overvoltage
+#define ISL94202_SETUP1_DFODOV_MASK     (0x1 << ISL94202_SETUP1_DFODOV)
+#define ISL94202_SETUP1_DFODUV          0x5 // DFET On During Undervoltage
+#define ISL94202_SETUP1_DFODUV_MASK     (0x1 << ISL94202_SETUP1_DFODUV)
+#define ISL94202_SETUP1_CBDC            0x6 // Cell Balance During Charge
+#define ISL94202_SETUP1_CBDC_MASK       (0x1 << ISL94202_SETUP1_CBDC)
+#define ISL94202_SETUP1_CBDD            0x7 // Cell Balance During Discharge
+#define ISL94202_SETUP1_CBDD_MASK       (0x1 << ISL94202_SETUP1_CBDD)
 
 // Operations Registers
 // Status 0 - R
