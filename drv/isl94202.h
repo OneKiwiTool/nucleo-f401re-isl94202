@@ -4,7 +4,10 @@
 #include <stdint.h>
 
 void read_register_list(void);
-uint8_t isl94202_readEEPROMAccess(void);
+
+uint16_t isl94202_getOverVoltThreshold(void);
+uint16_t isl94202_getOverVoltRecoveryThreshold(void);
+
 void isl94202_enableEEPROMAccess(void);
 void isl94202_disableEEPROMAccess(void);
 

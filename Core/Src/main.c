@@ -21,8 +21,8 @@ int main(void)
     //data = isl94202_readEEPROMAccess();
     //printf("\ndisable: %d\n", data);
 
-    data2 = isl94202_getRGOVolt();
-    printf("rgo: %04d mV\n", data2);
+    //data2 = isl94202_getOverVoltageThreshold();
+    //printf("rgo: %04x\n", data2);
 
 
     while (1)

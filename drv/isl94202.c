@@ -15,11 +15,82 @@ void read_register_list(void)
     }
 }
 
-uint8_t isl94202_readEEPROMAccess(void)
+// Configuration Registers
+uint16_t isl94202_getOverVoltThreshold(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_COV, buffer, 2);
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+uint16_t isl94202_getOverVoltRecoveryThreshold(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_OVR, buffer, 2);
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+uint8_t isl94202_getCellSelect(void)
 {
     uint8_t data = 0;
-    i2c_read_register(BMS_ADDR, REG_ISL94202_EEPROM, &data);
-    return data;
+    uint8_t num = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CELL_SEL, &data);
+    switch (data) {
+        case 0x83:
+            num = 3;
+            break;
+        case 0xC3:
+            num = 4;
+            break;
+        case 0xC7:
+            num = 5;
+            break;
+        case 0xE7:
+            num = 6;
+            break;
+        case 0xEF:
+            num = 7;
+            break;
+        case 0xFF:
+            num = 8;
+            break;
+    }
+    return num;
+}
+
+void isl94202_setCellSelect(uint8_t num)
+{
+    uint8_t data = 0;
+    if ((num < 3)&&(num > 8))
+    {
+        return;
+    }
+    
+    switch (num) {
+        case 3:
+            data = 0x83;
+            break;
+        case 4:
+            data = 0xC3;
+            break;
+        case 5:
+            data = 0xC7;
+            break;
+        case 6:
+            data = 0xE7;
+            break;
+        case 7:
+            data = 0xEF;
+            break;
+        case 8:
+            data = 0xFF;
+            break;
+    }
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CELL_SEL, data);
 }
 
 void isl94202_enableEEPROMAccess(void)
