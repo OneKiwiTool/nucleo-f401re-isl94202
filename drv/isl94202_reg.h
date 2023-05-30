@@ -252,152 +252,6 @@
 
 // RAM registers
 
-// Status 0
-#define ISL94202_STAT0           (0x80U)
-#define ISL94202_STAT0_OVF_Pos   (0x0U)
-#define ISL94202_STAT0_OVF_Msk   (0x1U << ISL94202_STAT0_OVF_Pos)
-#define ISL94202_STAT0_OVLOF_Pos (0x1U)
-#define ISL94202_STAT0_OVLOF_Msk (0x1U << ISL94202_STAT0_OVLOF_Pos)
-#define ISL94202_STAT0_UVF_Pos   (0x2U)
-#define ISL94202_STAT0_UVF_Msk   (0x1U << ISL94202_STAT0_UVF_Pos)
-#define ISL94202_STAT0_UVLOF_Pos (0x3U)
-#define ISL94202_STAT0_UVLOF_Msk (0x1U << ISL94202_STAT0_UVLOF_Pos)
-#define ISL94202_STAT0_DOTF_Pos  (0x4U)
-#define ISL94202_STAT0_DOTF_Msk  (0x1U << ISL94202_STAT0_DOTF_Pos)
-#define ISL94202_STAT0_DUTF_Pos  (0x5U)
-#define ISL94202_STAT0_DUTF_Msk  (0x1U << ISL94202_STAT0_DUTF_Pos)
-#define ISL94202_STAT0_COTF_Pos  (0x6U)
-#define ISL94202_STAT0_COTF_Msk  (0x1U << ISL94202_STAT0_COTF_Pos)
-#define ISL94202_STAT0_CUTF_Pos  (0x7U)
-#define ISL94202_STAT0_CUTF_Msk  (0x1U << ISL94202_STAT0_CUTF_Pos)
-
-// Status 1
-#define ISL94202_STAT1           (0x81U)
-#define ISL94202_STAT1_IOTF_Pos  (0x0U)
-#define ISL94202_STAT1_IOTF_Msk  (0x1U << ISL94202_STAT1_IOTF_Pos)
-#define ISL94202_STAT1_COCF_Pos  (0x1U)
-#define ISL94202_STAT1_COCF_Msk  (0x1U << ISL94202_STAT1_COCF_Pos)
-#define ISL94202_STAT1_DOCF_Pos  (0x2U)
-#define ISL94202_STAT1_DOCF_Msk  (0x1U << ISL94202_STAT1_DOCF_Pos)
-#define ISL94202_STAT1_DSCF_Pos  (0x3U)
-#define ISL94202_STAT1_DSCF_Msk  (0x1U << ISL94202_STAT1_DSCF_Pos)
-#define ISL94202_STAT1_CELLF_Pos (0x4U)
-#define ISL94202_STAT1_CELLF_Msk (0x1U << ISL94202_STAT1_CELLF_Pos)
-#define ISL94202_STAT1_OPENF_Pos (0x5U)
-#define ISL94202_STAT1_OPENF_Msk (0x1U << ISL94202_STAT1_OPENF_Pos)
-#define ISL94202_STAT1_VEOC_Pos  (0x7U)
-#define ISL94202_STAT1_VEOC_Msk  (0x1U << ISL94202_STAT1_VEOC_Pos)
-
-// Status 2
-#define ISL94202_STAT2             (0x82U)
-#define ISL94202_STAT2_LDPRSNT_Pos (0x0U)
-#define ISL94202_STAT2_LDPRSNT_Msk (0x1U << ISL94202_STAT2_LDPRSNT_Pos)
-#define ISL94202_STAT2_CHPRSNT_Pos (0x1U)
-#define ISL94202_STAT2_CHPRSNT_Msk (0x1U << ISL94202_STAT2_CHPRSNT_Pos)
-#define ISL94202_STAT2_CHING_Pos   (0x2U)
-#define ISL94202_STAT2_CHING_Msk   (0x1U << ISL94202_STAT2_CHING_Pos)
-#define ISL94202_STAT2_DCHING_Pos  (0x3U)
-#define ISL94202_STAT2_DCHING_Msk  (0x1U << ISL94202_STAT2_DCHING_Pos)
-#define ISL94202_STAT2_ECCUSED_Pos (0x4U)
-#define ISL94202_STAT2_ECCUSED_Msk (0x1U << ISL94202_STAT2_ECCUSED_Pos)
-#define ISL94202_STAT2_ECCFAIL_Pos (0x5U)
-#define ISL94202_STAT2_ECCFAIL_Msk (0x1U << ISL94202_STAT2_ECCFAIL_Pos)
-#define ISL94202_STAT2_INTSCAN_Pos (0x6U)
-#define ISL94202_STAT2_INTSCAN_Msk (0x1U << ISL94202_STAT2_INTSCAN_Pos)
-#define ISL94202_STAT2_LVCHG_Pos   (0x7U)
-#define ISL94202_STAT2_LVCHG_Msk   (0x1U << ISL94202_STAT2_LVCHG_Pos)
-
-// Status 3
-#define ISL94202_STAT3             (0x83U)
-#define ISL94202_STAT3_CBOT_Pos    (0x0U)
-#define ISL94202_STAT3_CBOT_Msk    (0x1U << ISL94202_STAT3_CBOT_Pos)
-#define ISL94202_STAT3_CBUT_Pos    (0x1U)
-#define ISL94202_STAT3_CBUT_Msk    (0x1U << ISL94202_STAT3_CBUT_Pos)
-#define ISL94202_STAT3_CBOV_Pos    (0x2U)
-#define ISL94202_STAT3_CBOV_Msk    (0x1U << ISL94202_STAT3_CBOV_Pos)
-#define ISL94202_STAT3_CBUV_Pos    (0x3U)
-#define ISL94202_STAT3_CBUV_Msk    (0x1U << ISL94202_STAT3_CBUV_Pos)
-#define ISL94202_STAT3_INIDLE_Pos  (0x4U)
-#define ISL94202_STAT3_INIDLE_Msk  (0x1U << ISL94202_STAT3_INIDLE_Pos)
-#define ISL94202_STAT3_INDOZE_Pos  (0x5U)
-#define ISL94202_STAT3_INDOZE_Msk  (0x1U << ISL94202_STAT3_INDOZE_Pos)
-#define ISL94202_STAT3_INSLEEP_Pos (0x6U)
-#define ISL94202_STAT3_INSLEEP_Msk (0x1U << ISL94202_STAT3_INSLEEP_Pos)
-
-// Cell Balance FET Control
-#define ISL94202_CBFC (0x84U)
-
-// Control 0
-#define ISL94202_CTRL0             (0x85U)
-#define ISL94202_CTRL0_AO_Pos      (0x0U)
-#define ISL94202_CTRL0_AO_Msk      (0xFU << ISL94202_CTRL0_AO_Pos)
-#define ISL94202_CTRL0_CG_Pos      (0x4U)
-#define ISL94202_CTRL0_CG_Msk      (0x3U << ISL94202_CTRL0_CG_Pos)
-#define ISL94202_CTRL0_ADCSTRT_Pos (0x6U)
-#define ISL94202_CTRL0_ADCSTRT_Msk (0x1U << ISL94202_CTRL0_ADCSTRT_Pos)
-
-// Control 1
-#define ISL94202_CTRL1           (0x86U)
-#define ISL94202_CTRL1_DFET_Pos  (0x0U)
-#define ISL94202_CTRL1_DFET_Msk  (0x1U << ISL94202_CTRL1_DFET_Pos)
-#define ISL94202_CTRL1_CFET_Pos  (0x1U)
-#define ISL94202_CTRL1_CFET_Msk  (0x1U << ISL94202_CTRL1_CFET_Pos)
-#define ISL94202_CTRL1_PCFET_Pos (0x2U)
-#define ISL94202_CTRL1_PCFET_Msk (0x1U << ISL94202_CTRL1_PCFET_Pos)
-#define ISL94202_CTRL1_PSD_Pos   (0x3U)
-#define ISL94202_CTRL1_PSD_Msk   (0x1U << ISL94202_CTRL1_PSD_Pos)
-
-// Control 2
-#define ISL94202_CTRL2             (0x87U)
-#define ISL94202_CTRL2_CBAL_ON_Pos (0x0U)
-#define ISL94202_CTRL2_CBAL_ON_Msk (0x1U << ISL94202_CTRL2_CBAL_ON_Pos)
-#define ISL94202_CTRL2_OW_STRT_Pos (0x1U)
-#define ISL94202_CTRL2_OW_STRT_Msk (0x1U << ISL94202_CTRL2_OW_STRT_Pos)
-#define ISL94202_CTRL2_UCSCAN_Pos  (0x2U)
-#define ISL94202_CTRL2_UCSCAN_Msk  (0x1U << ISL94202_CTRL2_UCSCAN_Pos)
-#define ISL94202_CTRL2_UCCMON_Pos  (0x3U)
-#define ISL94202_CTRL2_UCCMON_Msk  (0x1U << ISL94202_CTRL2_UCCMON_Pos)
-#define ISL94202_CTRL2_UCLMON_Pos  (0x4U)
-#define ISL94202_CTRL2_UCLMON_Msk  (0x1U << ISL94202_CTRL2_UCLMON_Pos)
-#define ISL94202_CTRL2_UCCBAL_Pos  (0x5U)
-#define ISL94202_CTRL2_UCCBAL_Msk  (0x1U << ISL94202_CTRL2_UCCBAL_Pos)
-#define ISL94202_CTRL2_UCFET_Pos   (0x6U)
-#define ISL94202_CTRL2_UCFET_Msk   (0x1U << ISL94202_CTRL2_UCFET_Pos)
-
-// Control 3
-#define ISL94202_CTRL3           (0x88U)
-#define ISL94202_CTRL3_IDLE_Pos  (0x0U)
-#define ISL94202_CTRL3_IDLE_Msk  (0x1U << ISL94202_CTRL3_IDLE_Pos)
-#define ISL94202_CTRL3_DOZE_Pos  (0x1U)
-#define ISL94202_CTRL3_DOZE_Msk  (0x1U << ISL94202_CTRL3_DOZE_Pos)
-#define ISL94202_CTRL3_SLEEP_Pos (0x2U)
-#define ISL94202_CTRL3_SLEEP_Msk (0x1U << ISL94202_CTRL3_SLEEP_Pos)
-#define ISL94202_CTRL3_PDWN_Pos  (0x3U)
-#define ISL94202_CTRL3_PDWN_Msk  (0x1U << ISL94202_CTRL3_PDWN_Pos)
-
-// EEPROM Enable
-#define ISL94202_EEEN          (0x89U)
-#define ISL94202_EEEN_EEEN_Pos (0x0U)
-#define ISL94202_EEEN_EEEN_Msk (0x1U << ISL94202_EEEN_EEEN_Pos)
-
-#define ISL94202_CELLMIN (0x8AU)
-#define ISL94202_CELLMAX (0x8CU)
-#define ISL94202_ISNS    (0x8EU)
-#define ISL94202_CELL1   (0x90U)
-#define ISL94202_CELL2   (0x92U)
-#define ISL94202_CELL3   (0x94U)
-#define ISL94202_CELL4   (0x96U)
-#define ISL94202_CELL5   (0x98U)
-#define ISL94202_CELL6   (0x9AU)
-#define ISL94202_CELL7   (0x9CU)
-#define ISL94202_CELL8   (0x9EU)
-#define ISL94202_IT      (0xA0U)
-#define ISL94202_XT1     (0xA2U)
-#define ISL94202_XT2     (0xA4U)
-#define ISL94202_VBATT   (0xA6U)
-#define ISL94202_VRGO    (0xA8U)
-#define ISL94202_ADC     (0xAAU)
-
 static const uint16_t OCD_Thresholds[] = { 4, 8, 16, 24, 32, 48, 64, 96 }; // mV
 
 static const uint16_t OCC_Thresholds[] = { 1, 2, 4, 6, 8, 12, 16, 24 }; // mV
@@ -411,5 +265,162 @@ static const uint16_t ISL94202_Current_Gain[] = { 50, 5, 500, 500 };
 #define ISL94202_DELAY_MS  (1U)
 #define ISL94202_DELAY_S   (2U)
 #define ISL94202_DELAY_MIN (3U)
+
+////////////////
+
+// Operations Registers
+// Status 0 - R
+#define REG_ISL94202_STATUS0            0x80
+#define ISL94202_STATUS0_OVF            0x0 // Overvoltage Fault
+#define ISL94202_STATUS0_OVF_MASK       (0x1 << ISL94202_STATUS0_OVF)
+#define ISL94202_STATUS0_OVLOF          0x1 // Overvoltage Lockout Fault
+#define ISL94202_STATUS0_OVLOF_MASK     (0x1 << ISL94202_STATUS0_OVLOF)
+#define ISL94202_STATUS0_UVF            0x2 // Undervoltage Fault
+#define ISL94202_STATUS0_UVF_MASK       (0x1 << ISL94202_STATUS0_UVF)
+#define ISL94202_STATUS0_UVLOF          0x3 // Undervoltage Lockout Fault
+#define ISL94202_STATUS0_UVLOF_MASK     (0x1 << ISL94202_STATUS0_UVLOF)
+#define ISL94202_STATUS0_DOTF           0x4 // Discharge Over-Temperature Fault
+#define ISL94202_STATUS0_DOTF_MASK      (0x1 << ISL94202_STATUS0_DOTF)
+#define ISL94202_STATUS0_DUTF           0x5 // Discharge Under-Temperature Fault
+#define ISL94202_STATUS0_DUTF_MASK      (0x1 << ISL94202_STATUS0_DUTF)
+#define ISL94202_STATUS0_COTF           0x6 // Charge Over-Temperature Fault
+#define ISL94202_STATUS0_COTF_MASK      (0x1 << ISL94202_STATUS0_COTF)
+#define ISL94202_STATUS0_CUTF           0x7 // Charge Under-Temperature Fault
+#define ISL94202_STATUS0_CUTF_MASK      (0x1 << ISL94202_STATUS0_CUTF)
+
+// Status 1 - R
+#define REG_ISL94202_STATUS1            0x81
+#define ISL94202_STATUS1_IOTF           0x0 // Internal Over-Temperature Fault
+#define ISL94202_STATUS1_IOTF_MASK      (0x1 << ISL94202_STATUS1_IOTF)
+#define ISL94202_STATUS1_COCF           0x1 // Charge Overcurrent Fault
+#define ISL94202_STATUS1_COCF_MASK      (0x1 << ISL94202_STATUS1_COCF)
+#define ISL94202_STATUS1_DOCF           0x2 // Discharge Overcurrent Fault
+#define ISL94202_STATUS1_DOCF_MASK      (0x1 << ISL94202_STATUS1_DOCF)
+#define ISL94202_STATUS1_DSCF           0x3 // Discharge Short Circuit Fault
+#define ISL94202_STATUS1_DSCF_MASK      (0x1 << ISL94202_STATUS1_DSCF)
+#define ISL94202_STATUS1_CELLF          0x4 // Cell Fail Fault
+#define ISL94202_STATUS1_CELLF_MASK     (0x1 << ISL94202_STATUS1_CELLF)
+#define ISL94202_STATUS1_OPENF          0x5 // Open-Wire Fault
+#define ISL94202_STATUS1_OPENF_MASK     (0x1 << ISL94202_STATUS1_OPENF)
+#define ISL94202_STATUS1_VEOC           0x7 // Voltage End-of-Charge 
+#define ISL94202_STATUS1_VEOC_MASK      (0x1 << ISL94202_STATUS1_VEOC)
+
+// Status 2 - R
+#define REG_ISL94202_STATUS2            0x82
+#define ISL94202_STATUS_LDPRSNT         0x0 // Load Present
+#define ISL94202_STATUS_LDPRSNT_MASK    (0x1 << ISL94202_STATUS_LDPRSNT)
+#define ISL94202_STATUS_CHPRSNT         0x1 // Charger Present
+#define ISL94202_STATUS_CHPRSNT_MASK    (0x1 << ISL94202_STATUS_CHPRSNT)
+#define ISL94202_STATUS_CHING           0x2 // Charging
+#define ISL94202_STATUS_CHING_MASK      (0x1 << ISL94202_STATUS_CHING)
+#define ISL94202_STATUS_DCHING          0x3 // Discharging
+#define ISL94202_STATUS_DCHING_MASK     (0x1 << ISL94202_STATUS_DCHING)
+#define ISL94202_STATUS_ECCUSED         0x4 // ECC_USED
+#define ISL94202_STATUS_ECCUSED_MASK    (0x1 << ISL94202_STATUS_ECCUSED)
+#define ISL94202_STATUS_ECCFAIL         0x5 // ECC_FAIL
+#define ISL94202_STATUS_ECCFAIL_MASK    (0x1 << ISL94202_STATUS_ECCFAIL)
+#define ISL94202_STATUS_INTSCAN         0x6 // Internal Scan
+#define ISL94202_STATUS_INTSCAN_MASK    (0x1 << ISL94202_STATUS_INTSCAN)
+#define ISL94202_STATUS_LVCHG           0x7 // Low Voltage Charge
+#define ISL94202_STATUS_LVCHG_MASK      (0x1 << ISL94202_STATUS_LVCHG)
+
+// Status 3 - R
+#define REG_ISL94202_STATUS3            0x83
+#define ISL94202_STATUS3_CBOT           0x0 // Cell Balance Over-Temperature Fault
+#define ISL94202_STATUS3_CBOT_MASK      (0x1 << ISL94202_STATUS3_CBOT)
+#define ISL94202_STATUS3_CBUT           0x1 // Cell Balance Under-Temperature Fault
+#define ISL94202_STATUS3_CBUT_MASK      (0x1 << ISL94202_STATUS3_CBUT)
+#define ISL94202_STATUS3_CBOV           0x2 // Cell Balance Overvoltage
+#define ISL94202_STATUS3_CBOV_MASK      (0x1 << ISL94202_STATUS3_CBOV)
+#define ISL94202_STATUS3_CBUV           0x3 // Cell Balance Undervoltage
+#define ISL94202_STATUS3_CBUV_MASK      (0x1 << ISL94202_STATUS3_CBUV)
+#define ISL94202_STATUS3_INIDLE         0x4 // In IDLE Mode
+#define ISL94202_STATUS3_INIDLE_MASK    (0x1 << ISL94202_STATUS3_INIDLE)
+#define ISL94202_STATUS3_INDOZE         0x5 // In DOZE Mode
+#define ISL94202_STATUS3_INDOZE_MASK    (0x1 << ISL94202_STATUS3_INDOZE)
+#define ISL94202_STATUS3_INSLEEP        0x6 // In SLEEP Mode
+#define ISL94202_STATUS3_INSLEEP_MASK   (0x1 << ISL94202_STATUS3_INSLEEP)
+
+// Cell Balance FET Control CBFC - R/W
+#define REG_ISL94202_CBFC               0x84
+
+// Control 0 - R/W
+#define REG_ISL94202_CONTROL0           0x85
+#define ISL94202_CONTROL0_AO            0x0 // Analog Output selection
+#define ISL94202_CONTROL0_AO_MASK       (0xF << ISL94202_CONTROL0_AO)
+#define ISL94202_CONTROL0_CG            0x4 // Current Gain setting
+#define ISL94202_CONTROL0_CG_MASK       (0x3 << ISL94202_CONTROL0_CG)
+#define ISL94202_CONTROL0_ADCSTRT       0x6 // ADC conversion start
+#define ISL94202_CONTROL0_ADCSTRT_MASK  (0x1 << ISL94202_CONTROL0_ADCSTRT)
+
+// Control 1 - R/W
+#define REG_ISL94202_CONTROL1           0x86
+#define ISL94202_CONTROL1_DFET          0x0 // Discharge FET
+#define ISL94202_CONTROL1_DFET_MASK     (0x1 << ISL94202_CONTROL1_DFET)
+#define ISL94202_CONTROL1_CFET          0x1 // Charge FET
+#define ISL94202_CONTROL1_CFET_MASK     (0x1 << ISL94202_CONTROL1_CFET)
+#define ISL94202_CONTROL1_PCFET         0x2 // Pre-Charge FET
+#define ISL94202_CONTROL1_PCFET_MASK    (0x1 << ISL94202_CONTROL1_PCFET)
+#define ISL94202_CONTROL1_PSD           0x3 // Pack Shutdown
+#define ISL94202_CONTROL1_PSD_MASK      (0x1 << ISL94202_CONTROL1_PSD)
+#define ISL94202_CONTROL1_CMONEN        0x4 // Charger Monitor Enable
+#define ISL94202_CONTROL1_CMONEN_MASK   (0x1 << ISL94202_CONTROL1_CMONEN)
+#define ISL94202_CONTROL1_CLRCERR       0x5 // Clear Charger Error
+#define ISL94202_CONTROL1_CLRCERR_MASK  (0x1 << ISL94202_CONTROL1_CLRCERR)
+#define ISL94202_CONTROL1_LMONEN        0x6 // Load Monitor Enable
+#define ISL94202_CONTROL1_LMONEN_MASK   (0x1 << ISL94202_CONTROL1_LMONEN)
+#define ISL94202_CONTROL1_CLRLERR       0x7 //  Clear Load Error
+#define ISL94202_CONTROL1_CLRLERR_MASK  (0x1 << ISL94202_CONTROL1_CLRLERR)
+
+// Control 2 - R/W
+#define REG_ISL94202_CONTROL2           0x87
+#define ISL94202_CONTRO2_CBAL_ON        0x0 // Cell Balance on
+#define ISL94202_CONTRO2_CBAL_ON_MASK   (0x1 << ISL94202_CONTRO2_CBAL_ON)
+#define ISL94202_CONTRO2_OW_STRT        0x1 // Open Wire Start
+#define ISL94202_CONTRO2_OW_STRT_MASK   (0x1 << ISL94202_CONTRO2_OW_STRT)
+#define ISL94202_CONTRO2_UCSCAN         0x2 // MCU System Scan
+#define ISL94202_CONTRO2_UCSCAN_MASK    (0x1 << ISL94202_CONTRO2_UCSCAN)
+#define ISL94202_CONTRO2_UCCMON         0x3 // MCU Charger Monitoring
+#define ISL94202_CONTRO2_UCCMON_MASK    (0x1 << ISL94202_CONTRO2_UCCMON)
+#define ISL94202_CONTRO2_UCLMON         0x4 // MCU Load Monitoring
+#define ISL94202_CONTRO2_UCLMON_MASK    (0x1 << ISL94202_CONTRO2_UCLMON)
+#define ISL94202_CONTRO2_UCCBAL         0x5 // MCU Cell Balancing
+#define ISL94202_CONTRO2_UCCBAL_MASK    (0x1 << ISL94202_CONTRO2_UCCBAL)
+#define ISL94202_CONTRO2_UCFET          0x6 // MCU FET control
+#define ISL94202_CONTRO2_UCFET_MASK     (0x1 << ISL94202_CONTRO2_UCFET)
+
+// Control 3 - R/W
+#define REG_ISL94202_CONTROL3           0x88
+#define ISL94202_CONTRO3_IDLE           0x0 // IDLE
+#define ISL94202_CONTRO3_IDLE_MASK      (0x1 << ISL94202_CONTRO3_IDLE)
+#define ISL94202_CONTRO3_DOZE           0x1 // DOZE
+#define ISL94202_CONTRO3_DOZE_MASK      (0x1 << ISL94202_CONTRO3_DOZE)
+#define ISL94202_CONTRO3_SLEEP          0x2 // SLEEP
+#define ISL94202_CONTRO3_SLEEP_MASK     (0x1 << ISL94202_CONTRO3_SLEEP)
+#define ISL94202_CONTRO3_PDWN           0x3 // Powerdown
+#define ISL94202_CONTRO3_PDWN_MASK      (0x1 << ISL94202_CONTRO3_PDWN)
+
+// EEPROM Enable - R/W
+#define REG_ISL94202_EEPROM             0x89
+
+
+// Data Registers
+#define REG_ISL94202_CELLMIN            0x8A    // Minimum Cell Voltage CELMIN - R
+#define REG_ISL94202_CELLMAX            0x8C    // Maximum Cell Voltage CELMAX - R
+#define REG_ISL94202_IPACK              0x8E    // Pack Current IPACK -R
+#define REG_ISL94202_CELL1              0x90    // Cell 1 Voltage VCELL1 - R 
+#define REG_ISL94202_CELL2              0x92    // Cell 2 Voltage VCELL2 - R 
+#define REG_ISL94202_CELL3              0x94    // Cell 3 Voltage VCELL3 - R 
+#define REG_ISL94202_CELL4              0x96    // Cell 4 Voltage VCELL4 - R 
+#define REG_ISL94202_CELL5              0x98    // Cell 5 Voltage VCELL5 - R 
+#define REG_ISL94202_CELL6              0x9A    // Cell 6 Voltage VCELL6 - R 
+#define REG_ISL94202_CELL7              0x9C    // Cell 7 Voltage VCELL7 - R 
+#define REG_ISL94202_CELL8              0x9E    // Cell 8 Voltage VCELL8 - R 
+#define REG_ISL94202_IT                 0xA0    // Internal Temperature IT - R 
+#define REG_ISL94202_XT1                0xA2    // External Temperature 1 XT1 - R 
+#define REG_ISL94202_XT2                0xA4    // External Temperature 2 XT2- R 
+#define REG_ISL94202_VBATT              0xA6    // Pack Voltage VBATT - R 
+#define REG_ISL94202_VRGO               0xA8    // RGO Voltage VRGO - R 
+#define REG_ISL94202_ADC                0xAA    // 14-bit ADC Voltage ADC - R 
 
 #endif /* ISL94202_REG_H_ */

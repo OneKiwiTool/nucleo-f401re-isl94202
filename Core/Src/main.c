@@ -5,9 +5,24 @@
 
 int main(void)
 {
+    uint8_t data = 0;
+    uint16_t data2 = 0;
     board_init();
     printf("\nStart Program!\n");
-    read_register_list();
+    //read_register_list();
+    //data = isl94202_readEEPROMAccess();
+    //printf("\nstart: %d\n", data);
+
+    //isl94202_enableEEPROMAccess();
+    //data = isl94202_readEEPROMAccess();
+    //printf("\nenable: %d\n", data);
+
+    //isl94202_disableEEPROMAccess();
+    //data = isl94202_readEEPROMAccess();
+    //printf("\ndisable: %d\n", data);
+
+    data2 = isl94202_getRGOVolt();
+    printf("rgo: %04d mV\n", data2);
 
 
     while (1)
