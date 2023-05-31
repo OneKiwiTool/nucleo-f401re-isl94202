@@ -16,6 +16,7 @@ void read_register_list(void)
 }
 
 // Configuration Registers
+// 0x00
 uint16_t isl94202_getOverVoltThreshold(void)
 {
     uint8_t buffer[2];
@@ -25,6 +26,7 @@ uint16_t isl94202_getOverVoltThreshold(void)
     return data;
 }
 
+// 0x02
 uint16_t isl94202_getOverVoltRecoveryThreshold(void)
 {
     uint8_t buffer[2];
@@ -34,6 +36,7 @@ uint16_t isl94202_getOverVoltRecoveryThreshold(void)
     return data;
 }
 
+// 0x49
 uint8_t isl94202_getCellSelect(void)
 {
     uint8_t data = 0;
@@ -93,59 +96,6 @@ void isl94202_setCellSelect(uint8_t num)
     i2c_write_register(BMS_ADDR, REG_ISL94202_CELL_SEL, data);
 }
 
-uint8_t isl94202_getEEPROMAccess(void)
-{
-    uint8_t data = 0;
-    i2c_read_register(BMS_ADDR, REG_ISL94202_EEPROM, &data);
-    return data;
-}
-
-void isl94202_enableEEPROMAccess(void)
-{
-    //Set the bit to change to read/write EEPROM
-    i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x01);
-}
-
-void isl94202_disableEEPROMAccess(void)
-{
-    //Set the bit to change to read/write EEPROM
-    i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x00);
-}
-
-#if 0
-void isl94202_writeEEPROM(uint8_t reg, uint8_t value)
-{
-	if ((reg > 0x58 && reg < 0x7F) || reg > 0xAB)
-		return;
-	//^ Datasheet mentions a warning not to write to these areas as they are for factory use
-
-	isl94202_enableEEPROMAccess();
-	uint8_t buffer[4];    //We need to write in pages
-	uint8_t i;
-	uint8_t base = reg & 0xFC;
-	buffer[0] = I2C_readReg8(slaveAdd, base);
-	HAL_Delay(1000);        //delay to allow EEPROM refresh
-	I2C_readMany(slaveAdd, base, 4, buffer);
-
-	//We have read in the buffer
-	//Update the buffer
-	buffer[(uint8_t) (reg & 0x03)] = value;
-
-	I2C_writeReg8(slaveAdd, base, buffer[0]);
-	HAL_Delay(35000);        //delay to allow EEPROM write
-
-	//^Special case for first uint8_t causing EEPROM reload
-	for (i = 0; i < 4; i++)
-	{
-	I2C_writeReg8(slaveAdd, base + i, buffer[i]);
-	HAL_Delay(35000);    //35ms
-	//pause for EEPROM write
-	}
-
-	isl94202_disableEEPROMAccess();
-}
-#endif
-
 // 0x80
 uint8_t isl94202_getStatus0(void)
 {
@@ -192,6 +142,27 @@ uint8_t isl94202_geControl1(void)
     return data;
 }
 
+// 0x89
+uint8_t isl94202_getEEPROMAccess(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_EEPROM, &data);
+    return data;
+}
+
+void isl94202_enableEEPROMAccess(void)
+{
+    //Set the bit to change to read/write EEPROM
+    i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x01);
+}
+
+void isl94202_disableEEPROMAccess(void)
+{
+    //Set the bit to change to read/write EEPROM
+    i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x00);
+}
+
+// 0x8A
 uint16_t isl94202_getCellMinVolt(void)
 {
     uint8_t buffer[2];

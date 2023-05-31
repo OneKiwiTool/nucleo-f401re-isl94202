@@ -5,7 +5,7 @@
 
 // Configuration Registers
 
-// Overvoltage Threshold
+// Overvoltage Threshold - R/W
 // Charge Detect Pulse Width
 #define REG_ISL94202_COV                0x00
 #define ISL94202_COV                    0x0 // Overvoltage Threshold
@@ -13,65 +13,65 @@
 #define ISL94202_CPW                    0x4 // Charge Detect Pulse-Width
 #define ISL94202_CPW_MASK               (0xF << ISL94202_CPW)
 
-// Overvoltage Recovery Threshold 
+// Overvoltage Recovery Threshold - R/W
 #define REG_ISL94202_OVR                0x02
 #define ISL94202_OVR                    0x0
 #define ISL94202_OVR_MASK               (0xFFF << ISL94202_OVR)
 
-// Undervoltage Threshold
+// Undervoltage Threshold - R/W
 #define REG_ISL94202_UVL                0x04
 #define ISL94202_UVL                    0x0 // Undervoltage Threshold
 #define ISL94202_UVL_MASK               (0xFFF << ISL94202_UVL)
 #define ISL94202_LPW                    0x4 // Load Detect Pulse Width
 #define ISL94202_LPW_MASK               (0xF << ISL94202_LPW)
 
-// Undervoltage Recovery Threshold
+// Undervoltage Recovery Threshold - R/W
 #define REG_ISL94202_UVR                0x06
 #define ISL94202_UVR                    0x0
 #define ISL94202_UVR_MASK               (0xFFF << ISL94202_UVR)
 
-// Overvoltage Lockout Threshold
+// Overvoltage Lockout Threshold - R/W
 #define REG_ISL94202_OVLO               0x08
 #define ISL94202_OVLO                   0x0
 #define ISL94202_OVLO_MASK              (0xFFF << ISL94202_OVLO)
 
-// Undervoltage Lockout Threshold
+// Undervoltage Lockout Threshold - R/W
 #define REG_ISL94202_UVLO               0x0A
 #define ISL94202_UVLO                   0x0
 #define ISL94202_UVLO_MASK              (0xFFF << ISL94202_UVLO)
 
-//End-of-Charge Threshold EOC
+//End-of-Charge Threshold EOC - R/W
 #define REG_ISL94202_EOC                0x0C
 #define ISL94202_EOC                    0x0
 #define ISL94202_EOC_MASK               (0xFFF << ISL94202_EOC)
 
-// Low Voltage Charge Level
+// Low Voltage Charge Level - R/W
 #define REG_ISL94202_LVCL               0x0E
 #define ISL94202_LVCL                   0x0
 #define ISL94202_LVCL_MASK              (0xFFF << ISL94202_LVCL)
 
-// Overvoltage Delay Timer
+// Overvoltage Delay Timer - R/W
 #define REG_ISL94202_OVDT               0x10
 #define ISL94202_OVDT                   0x0 // Overvoltage Delay Timer
 #define ISL94202_OVDT_MASK              (0x3FF << ISL94202_OVDT)
 #define ISL94202_OVDTU                  0x2 // Overvoltage Delay Timer Unit
 #define ISL94202_OVDTU_MASK             (0x3 << ISL94202_OVDTU)
 
-// Undervoltage Delay Time
+// Undervoltage Delay Time - R/W
 #define REG_ISL94202_UVDT               0x12
 #define ISL94202_UVDT                   0x0 // Undervoltage Delay Time
 #define ISL94202_UVDT_MASK              (0x3FF << ISL94202_UVDT)
 #define ISL94202_UVDTU                  0x2 // Undervoltage Delay Time Unit
 #define ISL94202_UVDTU_MASK             (0x3 << ISL94202_UVDTU)
 
-// Open-Wire Timing
+// Open-Wire Timing - R/W
 #define REG_ISL94202_OWT                0x14
 #define ISL94202_OWT                    0x0 // Open-Wire Timing
 #define ISL94202_OWT_MASK               (0x1FF << ISL94202_OWT)
 #define ISL94202_OWTU                   0x1 // Open-Wire Timing Unit
 #define ISL94202_OWTU_MASK              (0x1 << ISL94202_OWTU)
 
-// Discharge Overcurrent Timer
+// Discharge Overcurrent Timer - R/W
 #define REG_ISL94202_DOCT               0x16
 #define ISL94202_DOCT                   0x0 // Discharge Overcurrent Timer
 #define ISL94202_DOCT_MASK              (0x3FF << ISL94202_DOCT)
@@ -80,7 +80,7 @@
 #define ISL94202_DOC                    0x4 // Discharge Overcurrent Threshold
 #define ISL94202_DOC_MASK               (0x7 << ISL94202_DOC)
 
-// Charge Overcurrent Timer
+// Charge Overcurrent Timer - R/W
 #define REG_ISL94202_COCT               0x18
 #define ISL94202_COCT                   0x0 // Discharge Overcurrent Timer
 #define ISL94202_COCT_MASK              (0x3FF << ISL94202_COCT)
@@ -89,7 +89,7 @@
 #define ISL94202_COC                    0x4 // Discharge Overcurrent Threshold
 #define ISL94202_COC_MASK               (0x7 << ISL94202_COC)
 
-// Discharge Short-Circuit Timer
+// Discharge Short-Circuit Timer - R/W
 #define REG_ISL94202_DSCT               0x1A
 #define ISL94202_DSCT                   0x0 // Discharge Overcurrent Timer
 #define ISL94202_DSCT_MASK              (0x3FF << ISL94202_DSCT)
@@ -98,116 +98,116 @@
 #define ISL94202_COC                    0x4 // Discharge Overcurrent Threshold
 #define ISL94202_COC_MASK               (0x7 << ISL94202_COC)
 
-// Cell Balance Minimum Voltage
+// Cell Balance Minimum Voltage - R/W
 #define REG_ISL94202_CBMIN              0x1C
 #define ISL94202_CBMIN                  0x0
 #define ISL94202_CBMIN_MASK             (0xFFF << ISL94202_CBMIN)
 
-// Cell Balance Maximum Voltage
+// Cell Balance Maximum Voltage - R/W
 #define REG_ISL94202_CBMAX              0x1E
 #define ISL94202_CBMAX                  0x0
 #define ISL94202_CBMAX_MASK             (0xFFF << ISL94202_CBMAX)
 
-// Cell Balance Minimum Delta Voltage
+// Cell Balance Minimum Delta Voltage - R/W
 #define REG_ISL94202_CBMIND             0x20
 #define ISL94202_CBMIND                 0x0
 #define ISL94202_CBMIND_MASK            (0xFFF << ISL94202_CBMIND)
 
-// Cell Balance Maximum Delta Voltage
+// Cell Balance Maximum Delta Voltage - R/W
 #define REG_ISL94202_CBMAXD             0x22
 #define ISL94202_CBMAXD                 0x0
 #define ISL94202_CBMAXD_MASK            (0xFFF << ISL94202_CBMAXD)
 
-//  Cell Balance On-Time
+//  Cell Balance On-Time - R/W
 #define REG_ISL94202_CBON               0x24
 #define ISL94202_CBON                   0x0 // Cell Balance On Time
 #define ISL94202_CBON_MASK              (0x3FF << ISL94202_CBON)
 #define ISL94202_CBONU                  0x2 // Cell Balance On Time Unit
 #define ISL94202_CBONU_MASK             (0x3 << ISL94202_CBONU)
 
-// Cell Balance Off-Time
+// Cell Balance Off-Time - R/W
 #define REG_ISL94202_CBOFF              0x26
 #define ISL94202_CBOFF                  0x0 // Cell Balance Off Time
 #define ISL94202_CBOFF_MASK             (0x3FF << ISL94202_CBOFF)
 #define ISL94202_CBOFFU                 0x2 // Cell Balance Off Time Unit
 #define ISL94202_CBOFFU_MASK            (0x3 << ISL94202_CBOFFU)
 
-// Cell Balance Under-Temperature Limit
+// Cell Balance Under-Temperature Limit - R/W
 #define REG_ISL94202_CBUT               0x28
 #define ISL94202_CBUT                   0x0
 #define ISL94202_CBUT_MASK              (0xFFF << ISL94202_CBUT)
 
-// Cell Balance Under-Temperature Recovery Level
+// Cell Balance Under-Temperature Recovery Level - R/W
 #define REG_ISL94202_CBUTR              0x2A
 #define ISL94202_CBUTR                  0x0
 #define ISL94202_CBUTR_MASK             (0xFFF << ISL94202_CBUTR)
 
-// Cell Balance Over-Temperature Limit
+// Cell Balance Over-Temperature Limit - R/W
 #define REG_ISL94202_CBOT               0x2C
 #define ISL94202_CBOT                   0x0
 #define ISL94202_CBOT_MASK              (0xFFF << ISL94202_CBOT)
 
-// Cell Balance Over-Temperature Recovery Level
+// Cell Balance Over-Temperature Recovery Level - R/W
 #define REG_ISL94202_CBOTR              0x2E
 #define ISL94202_CBOTR                  0x0
 #define ISL94202_CBOTR_MASK             (0xFFF << ISL94202_CBOTR)
 
 // Charge Over-Temperature Limit
-#define REG_ISL94202_COT                0x30
+#define REG_ISL94202_COT                0x30 - R/W
 #define ISL94202_COT                    0x0
 #define ISL94202_COT_MASK               (0xFFF << ISL94202_COT)
 
-// Charge Over-Temperature Recovery Level
+// Charge Over-Temperature Recovery Level - R/W
 #define REG_ISL94202_COTR               0x32
 #define ISL94202_COTR                   0x0
 #define ISL94202_COTR_MASK              (0xFFF << ISL94202_COTR)
 
-// Charge Under-Temperature Limit
+// Charge Under-Temperature Limit - R/W
 #define REG_ISL94202_CUT                0x34
 #define ISL94202_CUT                    0x0
 #define ISL94202_CUT_MASK               (0xFFF << ISL94202_CUT)
 
-// Charge Under-Temperature Recovery Level
+// Charge Under-Temperature Recovery Level - R/W
 #define REG_ISL94202_CUTR               0x36
 #define ISL94202_CUTR                   0x0
 #define ISL94202_CUTR_MASK              (0xFFF << ISL94202_CUTR)
 
-// Discharge Over-Temperature Voltage
+// Discharge Over-Temperature Voltage - R/W
 #define REG_ISL94202_DOT                0x38
 #define ISL94202_DOT                    0x0
 #define ISL94202_DOT_MASK               (0xFFF << ISL94202_DOT)
 
-// Discharge Over-Temperature Recovery Level
+// Discharge Over-Temperature Recovery Level - R/W
 #define REG_ISL94202_DOTR               0x3A
 #define ISL94202_DOTR                   0x0
 #define ISL94202_DOTR_MASK              (0xFFF << ISL94202_DOTR)
 
-// Discharge Under-Temperature Limit
+// Discharge Under-Temperature Limit - R/W
 #define REG_ISL94202_DUT                0x3C
 #define ISL94202_DUT                    0x0
 #define ISL94202_DUT_MASK               (0xFFF << ISL94202_DUT)
 
-// Discharge Under-Temperature Recovery Voltage
+// Discharge Under-Temperature Recovery Voltage - R/W
 #define REG_ISL94202_DUTR               0x3E
 #define ISL94202_DUTR                   0x0
 #define ISL94202_DUTR_MASK              (0xFFF << ISL94202_DUTR)
 
-// Internal Over-Temperature Voltage Limit  
+// Internal Over-Temperature Voltage Limit - R/W
 #define REG_ISL94202_IOT                0x40
 #define ISL94202_IOT                    0x0
 #define ISL94202_IOT_MASK               (0xFFF << ISL94202_IOT)
 
-// Internal Over-Temperature Recovery Voltage
+// Internal Over-Temperature Recovery Voltage - R/W
 #define REG_ISL94202_IOTR               0x42
 #define ISL94202_IOTR                   0x0
 #define ISL94202_IOTR_MASK              (0xFFF << ISL94202_IOTR)
 
-// Sleep Level Voltage
+// Sleep Level Voltage - R/W
 #define REG_ISL94202_SLV                0x44
 #define ISL94202_SLV                    0x0
 #define ISL94202_SLV_MASK               (0xFFF << ISL94202_SLV)
 
-// Watchdog Timer and Sleep Delay Timer
+// Watchdog Timer and Sleep Delay Timer - R/W
 #define REG_ISL94202_SLT_WDT            0x46
 #define ISL94202_SLT_WDT_SLT            0x0 // Sleep Level Timer
 #define ISL94202_SLT_WDT_SLT_MASK       (0x1FF << ISL94202_SLT_WDT_SLT)

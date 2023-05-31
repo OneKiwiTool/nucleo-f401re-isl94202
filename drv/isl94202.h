@@ -5,15 +5,15 @@
 
 void read_register_list(void);
 
+// 0x00
 uint16_t isl94202_getOverVoltThreshold(void);
+
+// 0x02
 uint16_t isl94202_getOverVoltRecoveryThreshold(void);
 
+// 0x49
 uint8_t isl94202_getCellSelect(void);
 void isl94202_setCellSelect(uint8_t num);
-
-uint8_t isl94202_getEEPROMAccess(void);
-void isl94202_enableEEPROMAccess(void);
-void isl94202_disableEEPROMAccess(void);
 
 // 0x80
 uint8_t isl94202_getStatus0(void);
@@ -29,6 +29,11 @@ uint16_t isl94202_getCurrentGain(void);
 
 // 0x86
 uint8_t isl94202_geControl1(void);
+
+// 0x89
+uint8_t isl94202_getEEPROMAccess(void);
+void isl94202_enableEEPROMAccess(void);
+void isl94202_disableEEPROMAccess(void);
 
 // Data Registers
 uint16_t isl94202_getCellMinVolt(void);
