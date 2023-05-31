@@ -91,7 +91,7 @@ typedef struct
     uint16_t connected_cells; ///< \brief Actual number of cells connected (might
                               ///< be less than BOARD_NUM_CELLS_MAX)
 
-    float cell_voltages[BMS_NUM_CELLS_MAX]; ///< Single cell voltages (V)
+    float cell_voltages[BMS_NUM_CELLS]; ///< Single cell voltages (V)
     float cell_voltage_max;                   ///< Maximum cell voltage (V)
     float cell_voltage_min;                   ///< Minimum cell voltage (V)
     float cell_voltage_avg;                   ///< Average cell voltage (V)
@@ -118,7 +118,7 @@ typedef struct
     //time_t no_idle_timestamp;  ///< Stores last time of current > idle threshold
 
     uint32_t error_flags; ///< Bit array for different BmsErrorFlag errors
-} BmsStatus;
+} BmsStatus2;
 
 /**
  * BMS error flags
@@ -145,7 +145,37 @@ enum BmsErrorFlag
 typedef struct
 {
     BmsConfig conf;
+    BmsStatus2 status;
+} Bms2;
+
+///////////////////
+
+typedef struct
+{
+    uint16_t state;                                 // Current state of the battery
+    uint32_t error_flags;                           // Bit array for different BmsErrorFlag errors
+
+    uint16_t cell_voltages[BMS_NUM_CELLS];          // Single cell voltages (mV)
+    uint16_t cell_voltage_max;                      // Maximum cell voltage (mV)
+    uint16_t cell_voltage_min;                      // Minimum cell voltage (mV)
+    uint16_t cell_voltage_avg;                      // Average cell voltage (mV)
+    uint16_t pack_voltage;                          // Battery pack voltage (mV)
+    uint16_t vrgo_voltage;                          // VRGO voltage (mV)
+    uint16_t pack_current;                          // Battery pack current (mA)
+    uint16_t adc_voltage;
+
+} BmsStatus;
+
+typedef struct
+{
+    BmsConfig conf;
     BmsStatus status;
 } Bms;
+
+void bms_setNumCells(uint8_t num);
+void bms_getCurrent(Bms *bms);
+void bms_getVoltages(Bms *bms);
+void bms_getAdcVoltage(Bms *bms);
+void bms_updateErrorFlags(Bms *bms);
 
 #endif /* BMS_H_ */

@@ -10,8 +10,15 @@ int main(void)
     board_init();
     printf("\nStart Program!\n");
     //read_register_list();
-    //data = isl94202_readEEPROMAccess();
-    //printf("\nstart: %d\n", data);
+    data = isl94202_getEEPROMAccess();
+    printf("\nstart: %d\n", data);
+    data = isl94202_getCellSelect();
+    printf("cell: %d\n", data);
+
+    isl94202_setCellSelect(8);
+
+    data = isl94202_getCellSelect();
+    printf("cell1: %d\n", data);
 
     //isl94202_enableEEPROMAccess();
     //data = isl94202_readEEPROMAccess();

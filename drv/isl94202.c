@@ -93,6 +93,13 @@ void isl94202_setCellSelect(uint8_t num)
     i2c_write_register(BMS_ADDR, REG_ISL94202_CELL_SEL, data);
 }
 
+uint8_t isl94202_getEEPROMAccess(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_EEPROM, &data);
+    return data;
+}
+
 void isl94202_enableEEPROMAccess(void)
 {
     //Set the bit to change to read/write EEPROM
@@ -139,6 +146,51 @@ void isl94202_writeEEPROM(uint8_t reg, uint8_t value)
 }
 #endif
 
+// 0x80
+uint8_t isl94202_getStatus0(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_STATUS0, &data);
+    return data;
+}
+
+// 0x81
+uint8_t isl94202_getStatus1(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_STATUS1, &data);
+    return data;
+}
+
+// 0x82
+uint8_t isl94202_getCurrentDirection(void)
+{
+    uint8_t data = 0;
+    uint8_t sign = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_STATUS2, &data);
+    sign += (data & ISL94202_STATUS2_CHING_MASK) >> ISL94202_STATUS2_CHING;
+    sign -= (data & ISL94202_STATUS2_DCHING_MASK) >> ISL94202_STATUS2_DCHING;
+    return sign;
+}
+
+// 0x85
+uint16_t isl94202_getCurrentGain(void)
+{
+    uint8_t data = 0;
+    uint16_t gain = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL0, &data);
+    data = (data & ISL94202_CONTROL0_CG_MASK) >> ISL94202_CONTROL0_CG;
+    gain = data < 3 ? ISL94202_CurrentGain[data] : 500;
+    return gain;
+}
+
+// 0x86
+uint8_t isl94202_geControl1(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL1, &data);
+    return data;
+}
 
 uint16_t isl94202_getCellMinVolt(void)
 {
@@ -177,9 +229,6 @@ uint16_t isl94202_getCell1Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL1, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -190,9 +239,6 @@ uint16_t isl94202_getCell2Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL2, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -203,9 +249,6 @@ uint16_t isl94202_getCell3Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL3, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -216,9 +259,6 @@ uint16_t isl94202_getCell4Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL4, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -229,9 +269,6 @@ uint16_t isl94202_getCell5Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL5, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -242,9 +279,6 @@ uint16_t isl94202_getCell6Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL6, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -256,9 +290,6 @@ uint16_t isl94202_getCell7Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL7, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
 
@@ -269,11 +300,22 @@ uint16_t isl94202_getCell8Volt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_CELL8, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //CellVolt = data*1.8*8/(4095*3)
-    //CellmVolt = data*1.8*8*1000/(4095*3) = 4800*data/4095
-    //data = 4800*data/4095;
     return data;
 }
+
+uint16_t isl94202_getCellsVolt(uint8_t reg)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    if((reg>=REG_ISL94202_CELL1)&&(reg<=REG_ISL94202_CELL8))
+    {
+        i2c_read_registers(BMS_ADDR, reg, buffer, 2);
+        buffer[1] = buffer[1] & 0x0F;
+        data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    }
+    return data;
+}
+
 
 uint16_t isl94202_getInternalTemp(void)
 {
@@ -305,9 +347,6 @@ uint16_t isl94202_getExternalTemp2(void)
     return data;
 }
 
-/*
- * return: mili voltage (mV)
-*/
 uint16_t isl94202_getPackVolt(void)
 {
     uint8_t buffer[2];
@@ -315,15 +354,9 @@ uint16_t isl94202_getPackVolt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_VBATT, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //PackVolt = data*1.8*32/4095
-    //PackmVolt = data*1.8*32*1000/4095
-    //data = 57600*data/4095;
     return data;
 }
 
-/*
- * return: mili voltage (mV)
-*/
 uint16_t isl94202_getRGOVolt(void)
 {
     uint8_t buffer[2];

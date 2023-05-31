@@ -3,22 +3,6 @@
 
 #include <stdint.h>
 
-// RAM registers
-
-static const uint16_t OCD_Thresholds[] = { 4, 8, 16, 24, 32, 48, 64, 96 }; // mV
-
-static const uint16_t OCC_Thresholds[] = { 1, 2, 4, 6, 8, 12, 16, 24 }; // mV
-
-static const uint16_t DSC_Thresholds[] = { 16, 24, 32, 48, 64, 96, 128, 256 }; // mV
-
-static const uint16_t ISL94202_Current_Gain[] = { 50, 5, 500, 500 };
-
-// Scale Value for delay times (first 2 bytes)
-#define ISL94202_DELAY_US  (0U)
-#define ISL94202_DELAY_MS  (1U)
-#define ISL94202_DELAY_S   (2U)
-#define ISL94202_DELAY_MIN (3U)
-
 // Configuration Registers
 
 // Overvoltage Threshold
@@ -229,8 +213,8 @@ static const uint16_t ISL94202_Current_Gain[] = { 50, 5, 500, 500 };
 #define ISL94202_SLT_WDT_SLT_MASK       (0x1FF << ISL94202_SLT_WDT_SLT)
 #define ISL94202_SLT_WDT_SDTU           0x1 // Sleep Level Timer Unit selection
 #define ISL94202_SLT_WDT_SDTU_MASK      (0x3 << ISL94202_SLT_WDT_SDTU)
-#define ISL94202_SLT_WDT_SDTU           0x3 // Watchdog Timer prevents
-#define ISL94202_SLT_WDT_SDTU_MASK      (0x1F << ISL94202_SLT_WDT_SDTU)
+#define ISL94202_SLT_WDT_WDT            0x3 // Watchdog Timer prevents
+#define ISL94202_SLT_WDT_WDT_MASK       (0x1F << ISL94202_SLT_WDT_WDT)
 
 // Cell Select (Enable) - R/W
 #define REG_ISL94202_MODE_TIMER         0x48
@@ -311,22 +295,22 @@ static const uint16_t ISL94202_Current_Gain[] = { 50, 5, 500, 500 };
 
 // Status 2 - R
 #define REG_ISL94202_STATUS2            0x82
-#define ISL94202_STATUS_LDPRSNT         0x0 // Load Present
-#define ISL94202_STATUS_LDPRSNT_MASK    (0x1 << ISL94202_STATUS_LDPRSNT)
-#define ISL94202_STATUS_CHPRSNT         0x1 // Charger Present
-#define ISL94202_STATUS_CHPRSNT_MASK    (0x1 << ISL94202_STATUS_CHPRSNT)
-#define ISL94202_STATUS_CHING           0x2 // Charging
-#define ISL94202_STATUS_CHING_MASK      (0x1 << ISL94202_STATUS_CHING)
-#define ISL94202_STATUS_DCHING          0x3 // Discharging
-#define ISL94202_STATUS_DCHING_MASK     (0x1 << ISL94202_STATUS_DCHING)
-#define ISL94202_STATUS_ECCUSED         0x4 // ECC_USED
-#define ISL94202_STATUS_ECCUSED_MASK    (0x1 << ISL94202_STATUS_ECCUSED)
-#define ISL94202_STATUS_ECCFAIL         0x5 // ECC_FAIL
-#define ISL94202_STATUS_ECCFAIL_MASK    (0x1 << ISL94202_STATUS_ECCFAIL)
-#define ISL94202_STATUS_INTSCAN         0x6 // Internal Scan
-#define ISL94202_STATUS_INTSCAN_MASK    (0x1 << ISL94202_STATUS_INTSCAN)
-#define ISL94202_STATUS_LVCHG           0x7 // Low Voltage Charge
-#define ISL94202_STATUS_LVCHG_MASK      (0x1 << ISL94202_STATUS_LVCHG)
+#define ISL94202_STATUS2_LDPRSNT        0x0 // Load Present
+#define ISL94202_STATUS2_LDPRSNT_MASK   (0x1 << ISL94202_STATUS2_LDPRSNT)
+#define ISL94202_STATUS2_CHPRSNT        0x1 // Charger Present
+#define ISL94202_STATUS2_CHPRSNT_MASK   (0x1 << ISL94202_STATUS2_CHPRSNT)
+#define ISL94202_STATUS2_CHING          0x2 // Charging
+#define ISL94202_STATUS2_CHING_MASK     (0x1 << ISL94202_STATUS2_CHING)
+#define ISL94202_STATUS2_DCHING         0x3 // Discharging
+#define ISL94202_STATUS2_DCHING_MASK    (0x1 << ISL94202_STATUS2_DCHING)
+#define ISL94202_STATUS2_ECCUSED        0x4 // ECC_USED
+#define ISL94202_STATUS2_ECCUSED_MASK   (0x1 << ISL94202_STATUS2_ECCUSED)
+#define ISL94202_STATUS2_ECCFAIL        0x5 // ECC_FAIL
+#define ISL94202_STATUS2_ECCFAIL_MASK   (0x1 << ISL94202_STATUS2_ECCFAIL)
+#define ISL94202_STATUS2_INTSCAN        0x6 // Internal Scan
+#define ISL94202_STATUS2_INTSCAN_MASK   (0x1 << ISL94202_STATUS2_INTSCAN)
+#define ISL94202_STATUS2_LVCHG          0x7 // Low Voltage Charge
+#define ISL94202_STATUS2_LVCHG_MASK     (0x1 << ISL94202_STATUS2_LVCHG)
 
 // Status 3 - R
 #define REG_ISL94202_STATUS3            0x83
