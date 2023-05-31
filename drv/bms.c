@@ -7,6 +7,62 @@ void bms_setNumCells(uint8_t num)
     isl94202_setCellSelect(num);
 }
 
+void bms_shutdown(void)
+{
+    isl94202_powerdown();
+}
+
+void bms_chargeSwitch(uint8_t enable)
+{
+    isl94202_chargeSwitch(enable);
+}
+
+void bms_dischargeSwitch(uint8_t enable)
+{
+    isl94202_dischargeSwitch(enable);
+}
+
+void bms_updateBalancing(Bms *bms)
+{
+    uint8_t status;
+    uint8_t data = 0;
+    status = isl94202_getStatus3();
+    //isl94202_read_bytes(ISL94202_STAT3, &stat3, 1);
+
+    /*
+     * System scans for voltage, current and temperature measurements happen in different
+     * intervals depending on the mode. Cell balancing should be off during voltage scans.
+     *
+     * Each scan takes max. 1.7 ms. Choosing 16 ms off-time for voltages to settle.
+     */
+
+    if (status & ISL94202_STATUS3_INIDLE_MASK) {
+        // IDLE mode: Scan every 256 ms
+        isl94202_setCellBalanceOnTime(ISL94202_DELAY_MS, 240);
+        isl94202_setCellBalanceOffTime(ISL94202_DELAY_MS, 16);
+    }
+    else if (status & ISL94202_STATUS3_INDOZE_MASK) {
+        // DOZE mode: Scan every 512 ms
+        isl94202_setCellBalanceOnTime(ISL94202_DELAY_MS, 496);
+        isl94202_setCellBalanceOffTime(ISL94202_DELAY_MS, 16);
+    }
+    else if (!(status & ISL94202_STATUS3_INSLEEP_MASK)) {
+        // NORMAL mode: Scan every 32 ms
+        isl94202_setCellBalanceOnTime(ISL94202_DELAY_MS, 16);
+        isl94202_setCellBalanceOffTime(ISL94202_DELAY_MS, 16);
+    }
+
+    /*
+     * Balancing is done automatically, just reading status here (even though the datasheet
+     * tells that the CBFC register value cannot be used for indication if a cell is
+     * balanced at the moment)
+     */
+
+    data = isl94202_CellBalanceFETControl();
+
+    bms->status.balancing_status = data;
+}
+
 void bms_getCurrent(Bms *bms)
 {
     uint8_t data = 0;

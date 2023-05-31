@@ -36,6 +36,34 @@ uint16_t isl94202_getOverVoltRecoveryThreshold(void)
     return data;
 }
 
+// 0x24
+void isl94202_setCellBalanceOnTime(uint8_t unit, uint16_t time)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    if (unit > ISL94202_DELAY_MIN || time > 1023) {
+        return;
+    }
+    data = (unit << 0x0A) | time;
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBON, buffer, 2);
+}
+
+// 0x26
+void isl94202_setCellBalanceOffTime(uint8_t unit, uint16_t time)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    if (unit > ISL94202_DELAY_MIN || time > 1023) {
+        return;
+    }
+    data = (unit << 0x0A) | time;
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBOFF, buffer, 2);
+}
+
 // 0x49
 uint8_t isl94202_getCellSelect(void)
 {
@@ -123,6 +151,22 @@ uint8_t isl94202_getCurrentDirection(void)
     return sign;
 }
 
+// 0x83
+uint8_t isl94202_getStatus3(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_STATUS3, &data);
+    return data;
+}
+
+// 0x84
+uint8_t isl94202_CellBalanceFETControl(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CBFC, &data);
+    return data;
+}
+
 // 0x85
 uint16_t isl94202_getCurrentGain(void)
 {
@@ -140,6 +184,39 @@ uint8_t isl94202_geControl1(void)
     uint8_t data = 0;
     i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL1, &data);
     return data;
+}
+
+void isl94202_chargeSwitch(uint8_t enable)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL1, &data);
+    if (enable) {
+        data |= ISL94202_CONTROL1_CFET_MASK;
+    } else {
+        data &= ~ISL94202_CONTROL1_CFET_MASK;
+    }
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL1, data);
+}
+
+void isl94202_dischargeSwitch(uint8_t enable)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL1, &data);
+    if (enable) {
+        data |= ISL94202_CONTROL1_DFET_MASK;
+    } else {
+        data &= ~ISL94202_CONTROL1_DFET_MASK;
+    }
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL1, data);
+}
+
+// 0x88
+void isl94202_powerdown(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL3, &data);
+    data |= ISL94202_CONTROL3_PDWN_MASK;
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL3, data);
 }
 
 // 0x89

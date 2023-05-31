@@ -164,6 +164,8 @@ typedef struct
     uint16_t pack_current;                          // Battery pack current (mA)
     uint16_t adc_voltage;
 
+    uint8_t balancing_status;                       // holds on/off status of balancing switches
+
 } BmsStatus;
 
 typedef struct
