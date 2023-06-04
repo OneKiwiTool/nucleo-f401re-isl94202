@@ -421,7 +421,7 @@ void isl94202_setCellBalanceOffTime(uint8_t unit, uint16_t time)
 }
 
 // Ox28
-uint16_t isl94202_getCBUTLimit(void)
+uint16_t isl94202_getCBUnderTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -431,7 +431,7 @@ uint16_t isl94202_getCBUTLimit(void)
     return data;
 }
 
-void isl94202_setCBUTLimit(uint16_t data)
+void isl94202_setCBUnderTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -440,7 +440,7 @@ void isl94202_setCBUTLimit(uint16_t data)
 }
 
 // Ox2A
-uint16_t isl94202_getCBUTRLevel(void)
+uint16_t isl94202_getCBUnderTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -450,7 +450,7 @@ uint16_t isl94202_getCBUTRLevel(void)
     return data;
 }
 
-void isl94202_setCBUTRLevel(uint16_t data)
+void isl94202_setCBUnderTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -459,7 +459,7 @@ void isl94202_setCBUTRLevel(uint16_t data)
 }
 
 // Ox2C
-uint16_t isl94202_getCBOTLimit(void)
+uint16_t isl94202_getCBOverTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -469,7 +469,7 @@ uint16_t isl94202_getCBOTLimit(void)
     return data;
 }
 
-void isl94202_setCBOTLimit(uint16_t data)
+void isl94202_setCBOverTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -478,7 +478,7 @@ void isl94202_setCBOTLimit(uint16_t data)
 }
 
 // Ox2E
-uint16_t isl94202_getCBOTRLevel(void)
+uint16_t isl94202_getCBOverTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -488,7 +488,7 @@ uint16_t isl94202_getCBOTRLevel(void)
     return data;
 }
 
-void isl94202_setCBOTRLevel(uint16_t data)
+void isl94202_setCBOverTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -497,7 +497,7 @@ void isl94202_setCBOTRLevel(uint16_t data)
 }
 
 // Ox30
-uint16_t isl94202_getCOTLimit(void)
+uint16_t isl94202_getChargeOverTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -507,7 +507,7 @@ uint16_t isl94202_getCOTLimit(void)
     return data;
 }
 
-void isl94202_setCOTLimit(uint16_t data)
+void isl94202_setChargeOverTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -516,7 +516,7 @@ void isl94202_setCOTLimit(uint16_t data)
 }
 
 // Ox32
-uint16_t isl94202_getCOTRLevel(void)
+uint16_t isl94202_getChargeOverTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -526,7 +526,7 @@ uint16_t isl94202_getCOTRLevel(void)
     return data;
 }
 
-void isl94202_setCOTRLevel(uint16_t data)
+void isl94202_setChargeOverTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -535,7 +535,7 @@ void isl94202_setCOTRLevel(uint16_t data)
 }
 
 // Ox34
-uint16_t isl94202_getCUTLimit(void)
+uint16_t isl94202_getChargeUnderTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -545,7 +545,7 @@ uint16_t isl94202_getCUTLimit(void)
     return data;
 }
 
-void isl94202_setCUTLimit(uint16_t data)
+void isl94202_setChargeUnderTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -554,7 +554,7 @@ void isl94202_setCUTLimit(uint16_t data)
 }
 
 // Ox36
-uint16_t isl94202_getCUTRLevel(void)
+uint16_t isl94202_getChargeUnderTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -564,7 +564,7 @@ uint16_t isl94202_getCUTRLevel(void)
     return data;
 }
 
-void isl94202_setCUTRLevel(uint16_t data)
+void isl94202_setChargeUnderTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -573,7 +573,7 @@ void isl94202_setCUTRLevel(uint16_t data)
 }
 
 // Ox38
-uint16_t isl94202_getDOTVoltage(void)
+uint16_t isl94202_getDischargeOverTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -583,7 +583,7 @@ uint16_t isl94202_getDOTVoltage(void)
     return data;
 }
 
-void isl94202_setDOTVoltage(uint16_t data)
+void isl94202_setDischargeOverTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -592,7 +592,7 @@ void isl94202_setDOTVoltage(uint16_t data)
 }
 
 // Ox3A
-uint16_t isl94202_getDOTRLevel(void)
+uint16_t isl94202_getDischargeOverTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -602,7 +602,7 @@ uint16_t isl94202_getDOTRLevel(void)
     return data;
 }
 
-void isl94202_setDOTRLevel(uint16_t data)
+void isl94202_setDischargeOverTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -611,7 +611,7 @@ void isl94202_setDOTRLevel(uint16_t data)
 }
 
 // Ox3C
-uint16_t isl94202_getDUTRLimit(void)
+uint16_t isl94202_getDischargeUnderTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -621,7 +621,7 @@ uint16_t isl94202_getDUTRLimit(void)
     return data;
 }
 
-void isl94202_setDUTRLimit(uint16_t data)
+void isl94202_setDischargeUnderTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -630,7 +630,7 @@ void isl94202_setDUTRLimit(uint16_t data)
 }
 
 // Ox3E
-uint16_t isl94202_getDUTRVoltage(void)
+uint16_t isl94202_getDischargeUnderTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -640,7 +640,7 @@ uint16_t isl94202_getDUTRVoltage(void)
     return data;
 }
 
-void isl94202_setDUTRVoltage(uint16_t data)
+void isl94202_setDischargeUnderTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -649,7 +649,7 @@ void isl94202_setDUTRVoltage(uint16_t data)
 }
 
 // Ox40
-uint16_t isl94202_getIOTVLimit(void)
+uint16_t isl94202_getInterOverTemp(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -659,7 +659,7 @@ uint16_t isl94202_getIOTVLimit(void)
     return data;
 }
 
-void isl94202_setIOTVLimit(uint16_t data)
+void isl94202_setInterOverTemp(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -668,7 +668,7 @@ void isl94202_setIOTVLimit(uint16_t data)
 }
 
 // Ox42
-uint16_t isl94202_getIOTRVoltage(void)
+uint16_t isl94202_getInterOverTempRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -678,7 +678,7 @@ uint16_t isl94202_getIOTRVoltage(void)
     return data;
 }
 
-void isl94202_setIOTRVoltage(uint16_t data)
+void isl94202_setInterOverTempRecovery(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -687,7 +687,7 @@ void isl94202_setIOTRVoltage(uint16_t data)
 }
 
 // 0x44
-uint16_t isl94202_getSleepLevelVoltage(void)
+uint16_t isl94202_getSleepLevelVolt(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -697,7 +697,7 @@ uint16_t isl94202_getSleepLevelVoltage(void)
     return data;
 }
 
-void isl94202_setSleepLevelVoltage(uint16_t data)
+void isl94202_setSleepLevelVolt(uint16_t data)
 {
     uint8_t buffer[2];
     buffer[0] = data & 0xFF;
@@ -1002,13 +1002,11 @@ uint8_t isl94202_getEEPROMAccess(void)
 
 void isl94202_enableEEPROMAccess(void)
 {
-    //Set the bit to change to read/write EEPROM
     i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x01);
 }
 
 void isl94202_disableEEPROMAccess(void)
 {
-    //Set the bit to change to read/write EEPROM
     i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x00);
 }
 
