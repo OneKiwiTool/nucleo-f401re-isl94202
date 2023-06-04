@@ -80,47 +80,6 @@ typedef struct
 } BmsConfig;
 
 /**
- * Current BMS status including measurements and error flags
- */
-typedef struct
-{
-    uint16_t state;  ///< Current state of the battery
-    bool chg_enable; ///< Manual enable/disable setting for charging
-    bool dis_enable; ///< Manual enable/disable setting for discharging
-
-    uint16_t connected_cells; ///< \brief Actual number of cells connected (might
-                              ///< be less than BOARD_NUM_CELLS_MAX)
-
-    float cell_voltages[BMS_NUM_CELLS]; ///< Single cell voltages (V)
-    float cell_voltage_max;                   ///< Maximum cell voltage (V)
-    float cell_voltage_min;                   ///< Minimum cell voltage (V)
-    float cell_voltage_avg;                   ///< Average cell voltage (V)
-    float pack_voltage;                       ///< Battery external pack voltage (V)
-    float stack_voltage;                      ///< Battery internal stack voltage (V)
-
-    float pack_current; ///< \brief Battery pack current, charging direction
-                        ///< has positive sign (A)
-
-    float bat_temps[BMS_NUM_THERMISTORS_MAX]; ///< Battery temperatures (°C)
-    float bat_temp_max;                         ///< Maximum battery temperature (°C)
-    float bat_temp_min;                         ///< Minimum battery temperature (°C)
-    float bat_temp_avg;                         ///< Average battery temperature (°C)
-    float mosfet_temp;                          ///< MOSFET temperature (°C)
-    float ic_temp;                              ///< Internal BMS IC temperature (°C)
-    float mcu_temp;                             ///< MCU temperature (°C)
-
-    bool full;  ///< CV charging to cell_chg_voltage finished
-    bool empty; ///< Battery is discharged below cell_dis_voltage
-
-    float soc; ///< Calculated State of Charge (%)
-
-    uint32_t balancing_status; ///< holds on/off status of balancing switches
-    //time_t no_idle_timestamp;  ///< Stores last time of current > idle threshold
-
-    uint32_t error_flags; ///< Bit array for different BmsErrorFlag errors
-} BmsStatus2;
-
-/**
  * BMS error flags
  */
 enum BmsErrorFlag
@@ -142,42 +101,119 @@ enum BmsErrorFlag
     BMS_ERR_FET_OVERTEMP = 14,     ///< MOSFET temperature above limit
 };
 
+typedef union
+{
+    struct
+    {
+        uint8_t OVF         : 1; // 0
+        uint8_t OVLOF       : 1; // 1
+        uint8_t UVF         : 1; // 2
+        uint8_t UVLOF       : 1; // 3
+        uint8_t DOTF        : 1; // 4
+        uint8_t DUTF        : 1; // 5
+        uint8_t COTF        : 1; // 6
+        uint8_t CUTF        : 1; // 7
+    }bit;
+    uint8_t data;
+}BmsStatus0;
+
+typedef union
+{
+    struct
+    {
+        uint8_t IOTF        : 1; // 0
+        uint8_t COCF        : 1; // 1
+        uint8_t DOCF        : 1; // 2
+        uint8_t DSCF        : 1; // 3
+        uint8_t CELLF       : 1; // 4
+        uint8_t OPENF       : 1; // 5
+        uint8_t _rsv        : 1; // 6
+        uint8_t VEOC        : 1; // 7
+    }bit;
+    uint8_t data;
+}BmsStatus1;
+
+typedef union
+{
+    struct
+    {
+        uint8_t LD_PRSNT    : 1; // 0
+        uint8_t CH_PRSNT    : 1; // 1
+        uint8_t CHING       : 1; // 2
+        uint8_t DCHING      : 1; // 3
+        uint8_t ECC_USED    : 1; // 4
+        uint8_t ECC_FAIL    : 1; // 5
+        uint8_t INT_SCAN    : 1; // 6
+        uint8_t LVCHG       : 1; // 7
+    }bit;
+    uint8_t data;
+}BmsStatus2;
+
+typedef union
+{
+    struct
+    {
+        uint8_t CBOT        : 1; // 0
+        uint8_t CBUT        : 1; // 1
+        uint8_t CBOV        : 1; // 2
+        uint8_t CBUV        : 1; // 3
+        uint8_t IDLE        : 1; // 4
+        uint8_t DOZE        : 1; // 5
+        uint8_t SLEEP       : 1; // 6
+        uint8_t _rsv        : 1; // 7
+    }bit;
+    uint8_t data;
+}BmsStatus3;
+
 typedef struct
 {
-    BmsConfig conf;
-    BmsStatus2 status;
-} Bms2;
-
-///////////////////
-
-typedef struct
-{
-    uint16_t state;                                 // Current state of the battery
-    uint32_t error_flags;                           // Bit array for different BmsErrorFlag errors
-
-    uint16_t cell_voltages[BMS_NUM_CELLS];          // Single cell voltages (mV)
-    uint16_t cell_voltage_max;                      // Maximum cell voltage (mV)
-    uint16_t cell_voltage_min;                      // Minimum cell voltage (mV)
-    uint16_t cell_voltage_avg;                      // Average cell voltage (mV)
-    uint16_t pack_voltage;                          // Battery pack voltage (mV)
-    uint16_t vrgo_voltage;                          // VRGO voltage (mV)
-    uint16_t pack_current;                          // Battery pack current (mA)
-    uint16_t adc_voltage;
-
-    uint8_t balancing_status;                       // holds on/off status of balancing switches
-
-} BmsStatus;
+    uint16_t cells[8];                      // Single cell voltages (mV)
+    uint16_t cell_max;                      // Maximum cell voltage (mV)
+    uint16_t cell_min;                      // Minimum cell voltage (mV)
+    uint16_t cell_diff;
+    uint16_t cell_sum;
+    uint16_t vbat;                          // Battery pack voltage (mV)
+    uint16_t vrgo;                          // VRGO voltage (mV)
+} BmsVoltage;
 
 typedef struct
 {
-    BmsConfig conf;
-    BmsStatus status;
-} Bms;
+    uint16_t v_sense;
+    uint16_t i_sense;
+    uint16_t r_sense;
+    uint16_t gain;
+} BmsCurrent;
+
+typedef struct
+{
+    uint16_t it_volt;
+    uint16_t it_tgainv;
+    uint16_t it_degc;
+    uint16_t xt1_volt;
+    uint16_t xt1_tgainv;
+    uint16_t xt1_degc;
+    uint16_t xt2_volt;
+    uint16_t xt2_tgainv;
+    uint16_t xt2_degc;
+} BmsTemperature;
+
+typedef struct
+{
+    BmsVoltage volt;
+    BmsCurrent curr;
+    BmsTemperature temp;
+    BmsStatus0 stat0;
+    BmsStatus1 stat1;
+    BmsStatus2 stat2;
+    BmsStatus3 stat3;
+} BmsTypeDef;
 
 void bms_setNumCells(uint8_t num);
-void bms_getCurrent(Bms *bms);
-void bms_getVoltages(Bms *bms);
-void bms_getAdcVoltage(Bms *bms);
-void bms_updateErrorFlags(Bms *bms);
+void bms_updateCurrent(BmsTypeDef *bms);
+void bms_updateVoltages(BmsTypeDef *bms);
+void bms_updateAdcVoltage(BmsTypeDef *bms);
+void bms_updateStatus(BmsTypeDef *bms);
+
+/* https://github.com/LibreSolar/bms-firmware */
 
 #endif /* BMS_H_ */

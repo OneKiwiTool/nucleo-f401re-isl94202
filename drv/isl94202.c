@@ -17,7 +17,7 @@ void read_register_list(void)
 
 // Configuration Registers
 // 0x00
-uint16_t isl94202_getOverVoltThreshold(void)
+uint16_t isl94202_getOverVolt(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
@@ -26,17 +26,355 @@ uint16_t isl94202_getOverVoltThreshold(void)
     return data;
 }
 
+void isl94202_setOverVolt(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_COV, buffer, 2);
+}
+
 // 0x02
-uint16_t isl94202_getOverVoltRecoveryThreshold(void)
+uint16_t isl94202_getOverVoltRecovery(void)
 {
     uint8_t buffer[2];
     uint16_t data = 0;
     i2c_read_registers(BMS_ADDR, REG_ISL94202_OVR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
     return data;
 }
 
+void isl94202_setOverVoltRecovery(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_OVR, buffer, 2);
+}
+
+// 0x04
+uint16_t isl94202_getUnderVolt(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_UVL, buffer, 2);
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setUnderVolt(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_UVL, buffer, 2);
+}
+
+// 0x06
+uint16_t isl94202_getUnderVoltRecovery(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_UVR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setUnderVoltRecovery(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_UVR, buffer, 2);
+}
+
+// 0x08
+uint16_t isl94202_getOverVoltLockout(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_OVLO, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setOverVoltLockout(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_OVLO, buffer, 2);
+}
+
+// 0x0A
+uint16_t isl94202_getUnderVoltLockout(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_UVLO, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setUnderVoltLockout(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_UVLO, buffer, 2);
+}
+
+// 0x0C
+uint16_t isl94202_getEndOfCharge(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_EOC, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setEndOfCharge(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_EOC, buffer, 2);
+}
+
+// 0x0E
+uint16_t isl94202_getLowVoltageCharge(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_LVCL, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setLowVoltageCharge(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_LVCL, buffer, 2);
+}
+
+// 0x10
+uint16_t isl94202_getOverVoltDelay(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_OVDT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setOverVoltDelay(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_OVDT, buffer, 2);
+}
+
+// 0x12
+uint16_t isl94202_getUnderVoltDelay(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_UVDT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setUnderVoltDelay(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_UVDT, buffer, 2);
+}
+
+// 0x14 
+uint16_t isl94202_getOpenWireTiming(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_OWT, buffer, 2);
+    buffer[1] = buffer[1] & 0x03;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setOpenWireTiming(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_OWT, buffer, 2);
+}
+
+// 0x16 
+uint16_t isl94202_getDischargeOverCurrentTimer(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_DOCT, buffer, 2);
+    buffer[1] = buffer[1] & 0x7F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setDischargeOverCurrentTimer(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_DOCT, buffer, 2);
+}
+
+// 0x18
+uint16_t isl94202_getChargeOverCurrentTimer(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_COCT, buffer, 2);
+    buffer[1] = buffer[1] & 0x7F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setChargeOverCurrentTimer(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_COCT, buffer, 2);
+}
+
+// 0x1A 
+uint16_t isl94202_getDischargeShortCircuitTimer(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_DSCT, buffer, 2);
+    buffer[1] = buffer[1] & 0x7F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setDischargeShortCircuitTimer(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_DSCT, buffer, 2);
+}
+
+// 0x1C
+uint16_t isl94202_getCBMinVolt(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBMIN, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBMinVolt(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBMIN, buffer, 2);
+}
+
+// 0x1E
+uint16_t isl94202_getCBMaxVolt(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBMAX, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBMaxVolt(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBMAX, buffer, 2);
+}
+
+// 0x20
+uint16_t isl94202_getCBMinDelta(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBMIND, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBMinDelta(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBMIND, buffer, 2);
+}
+
+// 0x22
+uint16_t isl94202_getCBMaxDelta(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBMAXD, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBMaxDelta(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBMAXD, buffer, 2);
+}
+
 // 0x24
+uint16_t isl94202_getCellBalanceOn(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBON, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCellBalanceOn(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBON, buffer, 2);
+}
+
 void isl94202_setCellBalanceOnTime(uint8_t unit, uint16_t time)
 {
     uint8_t buffer[2];
@@ -51,6 +389,24 @@ void isl94202_setCellBalanceOnTime(uint8_t unit, uint16_t time)
 }
 
 // 0x26
+uint16_t isl94202_getCellBalanceOff(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBOFF, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCellBalanceOff(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBOFF, buffer, 2);
+}
+
 void isl94202_setCellBalanceOffTime(uint8_t unit, uint16_t time)
 {
     uint8_t buffer[2];
@@ -62,6 +418,322 @@ void isl94202_setCellBalanceOffTime(uint8_t unit, uint16_t time)
     buffer[0] = data & 0xFF;
     buffer[1] = data >> 8;
     i2c_write_registers(BMS_ADDR, REG_ISL94202_CBOFF, buffer, 2);
+}
+
+// Ox28
+uint16_t isl94202_getCBUTLimit(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBUT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBUTLimit(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBUT, buffer, 2);
+}
+
+// Ox2A
+uint16_t isl94202_getCBUTRLevel(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBUTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBUTRLevel(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBUTR, buffer, 2);
+}
+
+// Ox2C
+uint16_t isl94202_getCBOTLimit(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBOT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBOTLimit(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBOT, buffer, 2);
+}
+
+// Ox2E
+uint16_t isl94202_getCBOTRLevel(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CBOTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCBOTRLevel(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CBOTR, buffer, 2);
+}
+
+// Ox30
+uint16_t isl94202_getCOTLimit(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_COT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCOTLimit(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_COT, buffer, 2);
+}
+
+// Ox32
+uint16_t isl94202_getCOTRLevel(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_COTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCOTRLevel(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_COTR, buffer, 2);
+}
+
+// Ox34
+uint16_t isl94202_getCUTLimit(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CUT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCUTLimit(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CUT, buffer, 2);
+}
+
+// Ox36
+uint16_t isl94202_getCUTRLevel(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_CUTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setCUTRLevel(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_CUTR, buffer, 2);
+}
+
+// Ox38
+uint16_t isl94202_getDOTVoltage(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_DOT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setDOTVoltage(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_DOT, buffer, 2);
+}
+
+// Ox3A
+uint16_t isl94202_getDOTRLevel(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_DOTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setDOTRLevel(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_DOTR, buffer, 2);
+}
+
+// Ox3C
+uint16_t isl94202_getDUTRLimit(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_DUT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setDUTRLimit(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_DUT, buffer, 2);
+}
+
+// Ox3E
+uint16_t isl94202_getDUTRVoltage(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_DUTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setDUTRVoltage(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_DUTR, buffer, 2);
+}
+
+// Ox40
+uint16_t isl94202_getIOTVLimit(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_IOT, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setIOTVLimit(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_IOT, buffer, 2);
+}
+
+// Ox42
+uint16_t isl94202_getIOTRVoltage(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_IOTR, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setIOTRVoltage(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_IOTR, buffer, 2);
+}
+
+// 0x44
+uint16_t isl94202_getSleepLevelVoltage(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_SLV, buffer, 2);
+    buffer[1] = buffer[1] & 0x0F;
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setSleepLevelVoltage(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_SLV, buffer, 2);
+}
+
+// 0x46
+uint16_t isl94202_getWatchdogTimer(void)
+{
+    uint8_t buffer[2];
+    uint16_t data = 0;
+    i2c_read_registers(BMS_ADDR, REG_ISL94202_SLT_WDT, buffer, 2);
+    data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    return data;
+}
+
+void isl94202_setWatchdogTimer(uint16_t data)
+{
+    uint8_t buffer[2];
+    buffer[0] = data & 0xFF;
+    buffer[1] = data >> 8;
+    i2c_write_registers(BMS_ADDR, REG_ISL94202_SLT_WDT, buffer, 2);
+}
+
+// 0x48
+uint8_t isl94202_getModeTimer(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_MODE_TIMER, &data);
+    return data;
+}
+
+void isl94202_setModeTimer(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_MODE_TIMER, data);
 }
 
 // 0x49
@@ -124,6 +796,53 @@ void isl94202_setCellSelect(uint8_t num)
     i2c_write_register(BMS_ADDR, REG_ISL94202_CELL_SEL, data);
 }
 
+// 0x4A
+uint8_t isl94202_getSetup0(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_SETUP0, &data);
+    return data;
+}
+
+void isl94202_setSetup0(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_SETUP0, data);
+}
+
+// 0x4B
+uint8_t isl94202_getSetup1(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_SETUP1, &data);
+    return data;
+}
+
+void isl94202_setSetup1(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_SETUP1, data);
+}
+
+// 0x50 - 0x57
+uint8_t isl94202_readUserEEPROM(uint8_t reg)
+{
+	uint8_t data = 0;
+    if ((reg>=0x50) && (reg<=0x57)){
+        isl94202_enableEEPROMAccess();
+        i2c_read_register(BMS_ADDR, reg, &data);
+        isl94202_disableEEPROMAccess();
+    }
+    return data;
+}
+
+void isl94202_writeUserEEPROM(uint8_t reg, uint8_t data)
+{
+    if ((reg>=0x50) && (reg<=0x57)){
+        isl94202_enableEEPROMAccess();
+        i2c_write_register(BMS_ADDR, reg, data);
+        isl94202_disableEEPROMAccess();
+    }
+}
+
 // 0x80
 uint8_t isl94202_getStatus0(void)
 {
@@ -141,6 +860,13 @@ uint8_t isl94202_getStatus1(void)
 }
 
 // 0x82
+uint8_t isl94202_getStatus2(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_STATUS2, &data);
+    return data;
+}
+
 uint8_t isl94202_getCurrentDirection(void)
 {
     uint8_t data = 0;
@@ -160,14 +886,31 @@ uint8_t isl94202_getStatus3(void)
 }
 
 // 0x84
-uint8_t isl94202_CellBalanceFETControl(void)
+uint8_t isl94202_getCellBalanceFETControl(void)
 {
     uint8_t data = 0;
     i2c_read_register(BMS_ADDR, REG_ISL94202_CBFC, &data);
     return data;
 }
 
+void isl94202_setCellBalanceFETControl(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CBFC, data);
+}
+
 // 0x85
+uint8_t isl94202_geControl0(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL0, &data);
+    return data;
+}
+
+void isl94202_setControl0(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL0, data);
+}
+
 uint16_t isl94202_getCurrentGain(void)
 {
     uint8_t data = 0;
@@ -184,6 +927,11 @@ uint8_t isl94202_geControl1(void)
     uint8_t data = 0;
     i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL1, &data);
     return data;
+}
+
+void isl94202_setControl1(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL1, data);
 }
 
 void isl94202_chargeSwitch(uint8_t enable)
@@ -210,7 +958,32 @@ void isl94202_dischargeSwitch(uint8_t enable)
     i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL1, data);
 }
 
+// 0x87
+uint8_t isl94202_getControl2(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL2, &data);
+    return data;
+}
+
+void isl94202_setControl2(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL2, data);
+}
+
 // 0x88
+uint8_t isl94202_getControl3(void)
+{
+    uint8_t data = 0;
+    i2c_read_register(BMS_ADDR, REG_ISL94202_CONTROL3, &data);
+    return data;
+}
+
+void isl94202_setControl3(uint8_t data)
+{
+    i2c_write_register(BMS_ADDR, REG_ISL94202_CONTROL3, data);
+}
+
 void isl94202_powerdown(void)
 {
     uint8_t data = 0;
@@ -239,7 +1012,7 @@ void isl94202_disableEEPROMAccess(void)
     i2c_write_register(BMS_ADDR, REG_ISL94202_EEPROM, 0x00);
 }
 
-// 0x8A
+// 0x8A - 0xAA
 uint16_t isl94202_getCellMinVolt(void)
 {
     uint8_t buffer[2];
@@ -330,7 +1103,6 @@ uint16_t isl94202_getCell6Volt(void)
     return data;
 }
 
-
 uint16_t isl94202_getCell7Volt(void)
 {
     uint8_t buffer[2];
@@ -363,7 +1135,6 @@ uint16_t isl94202_getCellsVolt(uint8_t reg)
     }
     return data;
 }
-
 
 uint16_t isl94202_getInternalTemp(void)
 {
@@ -413,9 +1184,6 @@ uint16_t isl94202_getRGOVolt(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_VRGO, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
-    //RGO_Volt = data*1.8*2/4095
-    //RGO_miliVolt = data*1.8*2*1000/4095
-    //data = 3600*data/4095;
     return data;
 }
 

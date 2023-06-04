@@ -28,6 +28,7 @@ uint8_t isl94202_getStatus0(void);
 uint8_t isl94202_getStatus1(void);
 
 // 0x82
+uint8_t isl94202_getStatus2(void);
 uint8_t isl94202_getCurrentDirection(void);
 
 // 0x83

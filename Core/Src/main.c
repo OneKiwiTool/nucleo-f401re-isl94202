@@ -1,6 +1,7 @@
 #include "main.h"
 #include "board.h"
 #include "isl94202.h"
+#include "bms.h"
 #include <stdio.h>
 
 int main(void)
@@ -10,15 +11,63 @@ int main(void)
     board_init();
     printf("\nStart Program!\n");
     //read_register_list();
-    data = isl94202_getEEPROMAccess();
-    printf("\nstart: %d\n", data);
+    //data = isl94202_getEEPROMAccess();
+    //printf("\nstart: %d\n", data);
     data = isl94202_getCellSelect();
     printf("cell: %d\n", data);
 
-    isl94202_setCellSelect(8);
+    isl94202_setCellSelect(6);
 
     data = isl94202_getCellSelect();
-    printf("cell1: %d\n", data);
+    printf("cell get: %d\n", data);
+
+    data2 = isl94202_getCellMinVolt();
+    data2 = data2*960/819;
+    printf("cell min: %d mV\n", data2);
+
+    data2 = isl94202_getCellMaxVolt();
+    data2 = data2*960/819;
+    printf("cell max: %d mV\n", data2);
+
+    data2 = isl94202_getCell1Volt();
+    data2 = data2*960/819;
+    printf("cell  01: %d mV\n", data2);
+
+    data2 = isl94202_getCell2Volt();
+    data2 = data2*960/819;
+    printf("cell  02: %d mV\n", data2);
+
+    data2 = isl94202_getCell3Volt();
+    data2 = data2*960/819;
+    printf("cell  03: %d mV\n", data2);
+
+    data2 = isl94202_getCell4Volt();
+    data2 = data2*960/819;
+    printf("cell  04: %d mV\n", data2);
+
+    data2 = isl94202_getCell5Volt();
+    data2 = data2*960/819;
+    printf("cell  05: %d mV\n", data2);
+
+    data2 = isl94202_getCell6Volt();
+    data2 = data2*960/819;
+    printf("cell  06: %d mV\n", data2);
+
+    data2 = isl94202_getCell7Volt();
+    data2 = data2*960/819;
+    printf("cell  07: %d mV\n", data2);
+
+    data2 = isl94202_getCell8Volt();
+    data2 = data2*960/819;
+    printf("cell  08: %d mV\n", data2);
+
+    data2 = isl94202_getPackVolt();
+    data2 = data2*11520/819;
+    printf("pack vol: %d mV\n", data2);
+
+    data2 = isl94202_getRGOVolt();
+    data2 = data2*720/819;
+    printf("RGO Volt: %d mV\n", data2);
 
     //isl94202_enableEEPROMAccess();
     //data = isl94202_readEEPROMAccess();

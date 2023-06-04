@@ -152,8 +152,8 @@
 #define ISL94202_CBOTR                  0x0
 #define ISL94202_CBOTR_MASK             (0xFFF << ISL94202_CBOTR)
 
-// Charge Over-Temperature Limit
-#define REG_ISL94202_COT                0x30 - R/W
+// Charge Over-Temperature Limit - R/W
+#define REG_ISL94202_COT                0x30
 #define ISL94202_COT                    0x0
 #define ISL94202_COT_MASK               (0xFFF << ISL94202_COT)
 
