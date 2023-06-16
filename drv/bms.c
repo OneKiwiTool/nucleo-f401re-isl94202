@@ -3,39 +3,38 @@
 #include "isl94202_reg.h"
 #include <stddef.h>
 
-static const int32_t temp_volt[] = {153, 295, 463, 710, 755};
-static const int32_t temp_degc[] = {8000, 50000, 25000, 0, -40000};
 #define ARRAY_SIZE(array) (sizeof(array) / sizeof(*array))
 
 // interpolated value of array b at position value_a
-int16_t interpolate(const int32_t a[], const int32_t b[], size_t size, uint16_t value_a)
+int16_t interpolateTemp(int16_t volt)
 {
-    if (a[0] < a[size - 1]) {
-        for (unsigned int i = 0; i < size; i++) {
-            if (value_a <= a[i]) {
-                if (i == 0) {
-                    return b[0]; // value_a smaller than first element
-                }
-                else {
-                    return b[i - 1] + (b[i] - b[i - 1]) * (value_a - a[i - 1]) / (a[i] - a[i - 1]);
-                }
-            }
+    int16_t degc = 0;
+    int16_t temp_volt[] = {56, 62, 70, 78, 87, 97, 109, 122, 136, 153, 171, 191, 214, 238, 265, 295, 326, 359, 393, 428, 463, 498, 532, 565, 595, 624, 649, 672, 693, 710, 724, 737, 747, 755};
+    int16_t temp_degc[] = {125, 120, 115, 110, 105, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0, -5, -10, -15, -20, -25, -30, -35, -40};
+    size_t size = ARRAY_SIZE(temp_volt);
+
+    for (uint8_t i = 0; i < size; i++){
+        if ((volt <= temp_volt[i])&&(i==0)){
+            degc = 100*temp_degc[0]; // value_a smaller than first element
+        } else if ((volt >= temp_volt[i])&&(i== size-1)){
+            degc = 100*temp_degc[size-1]; // value_a larger than last element
+        } else if ((volt >= temp_volt[i])&&(volt <= temp_volt[i+1])) {
+            degc = (temp_degc[i] + (temp_degc[i+1] - temp_degc[i]) * (volt - temp_volt[i]) / (temp_volt[i+1] - temp_volt[i]))*100;
         }
-        return b[size - 1]; // value_a larger than last element
     }
-    else {
-        for (unsigned int i = 0; i < size; i++) {
-            if (value_a >= a[i]) {
-                if (i == 0) {
-                    return b[0]; // value_a smaller than first element
-                }
-                else {
-                    return b[i - 1] + (b[i] - b[i - 1]) * (value_a - a[i - 1]) / (a[i] - a[i - 1]);
-                }
-            }
-        }
-        return b[size - 1]; // value_a larger than last element
+    return degc;
+}
+
+void bms_initHardware(BmsTypeDef *bms)
+{
+    uint8_t num = BMS_NUM_CELLS;
+    if(num < 3){
+        num = 3;
+    } else if(num > 8) {
+        num = 8;
     }
+    bms_setNumCells(num);
+    bms->curr.r_sense = BMS_SHUNT_RESISTOR_uOhm;
 }
 
 void bms_setNumCells(uint8_t num)
@@ -118,9 +117,9 @@ void bms_updateCurrent(BmsTypeDef *bms)
     // current (mA) = value*1.8*1000/(4095*Gain*Rsense)
     //              = value*1800/(4095*Gain*Rsense) = value*360/(819*Gain*Rsense)
     adc = isl94202_getPackCurrent();
-    data = (sign*360*adc)/(819*gain*bms->curr.r_sense);
+    data = (sign * 360 * adc) / (819 * gain * bms->curr.r_sense);
     bms->curr.i_sense = data;
-    bms->curr.v_sense = bms->curr.i_sense*bms->curr.r_sense;
+    bms->curr.v_sense = bms->curr.i_sense * bms->curr.r_sense/1000;
 }
 
 void bms_updateVoltages(BmsTypeDef *bms)
@@ -130,43 +129,46 @@ void bms_updateVoltages(BmsTypeDef *bms)
     data = isl94202_getCellMinVolt();
     // volt_min (V) = value*1.8*8/(4095*3)
     // volt_min (mV) = value*1.8*8*1000/(4095*3) = 4800/4095 = 960/819
-    data = data*960/819;
+    data = data * 960 / 819;
     bms->volt.cell_min = data;
 
     data = isl94202_getCellMaxVolt();
     // volt_max (V) = value*1.8*8/(4095*3)
     // volt_max (mV) = value*1.8*8*1000/(4095*3) = 4800/4095 = 960/819
-    data = data*960/819;
+    data = data * 960 / 819;
     bms->volt.cell_max = data;
 
-    for (uint8_t i = 0; i < 8; i++) {
-        data = isl94202_getCellsVolt(REG_ISL94202_CELL1 + 2*i);
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        data = isl94202_getCellsVolt(REG_ISL94202_CELL1 + 2 * i);
         // volt (V) = value*1.8*8/(4095*3)
         // volt (mV) = value*1.8*8*1000/(4095*3) = 4800/4095 = 960/819
-        data = data*960/819;
+        data = data * 960 / 819;
         bms->volt.cells[i] = data;
     }
 
     data = isl94202_getPackVolt();
     // volt (V) = value*1.8*32/4095
     // volt (mV) = value*1.8*32*1000/4095 = 57600/4095 = 11520/819
-    data = data*11520/819;
+    data = data * 11520 / 819;
     bms->volt.vbat = data;
 
     data = isl94202_getRGOVolt();
     // volt (V) = value*1.8*2/4095
     // volt (mV) = value*1.8*2*1000/4095 = 3600/4095 = 720/819
-    data = data*720/819;
+    data = data * 720 / 819;
     bms->volt.vrgo = data;
 
-    if (BMS_NUM_CELLS == 7) {
+    if (BMS_NUM_CELLS == 7)
+    {
         bms->volt.cells[5] = bms->volt.cells[6];
         bms->volt.cells[6] = bms->volt.cells[7];
         bms->volt.cells[7] = bms->volt.cells[8];
         bms->volt.cells[8] = 0;
     }
 
-    if (BMS_NUM_CELLS == 6) {
+    if (BMS_NUM_CELLS == 6)
+    {
         bms->volt.cells[4] = bms->volt.cells[6];
         bms->volt.cells[5] = bms->volt.cells[7];
         bms->volt.cells[6] = bms->volt.cells[8];
@@ -174,7 +176,8 @@ void bms_updateVoltages(BmsTypeDef *bms)
         bms->volt.cells[8] = 0;
     }
 
-    if (BMS_NUM_CELLS == 5) {
+    if (BMS_NUM_CELLS == 5)
+    {
         bms->volt.cells[4] = bms->volt.cells[7];
         bms->volt.cells[5] = bms->volt.cells[8];
         bms->volt.cells[6] = 0;
@@ -182,7 +185,8 @@ void bms_updateVoltages(BmsTypeDef *bms)
         bms->volt.cells[8] = 0;
     }
 
-    if (BMS_NUM_CELLS == 4) {
+    if (BMS_NUM_CELLS == 4)
+    {
         bms->volt.cells[3] = bms->volt.cells[7];
         bms->volt.cells[4] = bms->volt.cells[8];
         bms->volt.cells[5] = 0;
@@ -191,7 +195,8 @@ void bms_updateVoltages(BmsTypeDef *bms)
         bms->volt.cells[8] = 0;
     }
 
-    if (BMS_NUM_CELLS == 3) {
+    if (BMS_NUM_CELLS == 3)
+    {
         bms->volt.cells[3] = bms->volt.cells[8];
         bms->volt.cells[4] = 0;
         bms->volt.cells[5] = 0;
@@ -202,7 +207,8 @@ void bms_updateVoltages(BmsTypeDef *bms)
 
     bms->volt.cell_diff = bms->volt.cell_max - bms->volt.cell_min;
     bms->volt.cell_sum = 0;
-    for (uint8_t i = 0; i < 8; i++) {
+    for (uint8_t i = 0; i < 8; i++)
+    {
         bms->volt.cell_sum += bms->volt.cells[i];
     }
 }
@@ -216,21 +222,20 @@ void bms_updateTemperatures(BmsTypeDef *bms)
     adc_raw = isl94202_getInternalTemp();
     // Tempv = value*1.8/4095
     // mTempv = value*1.8*1000/4095 = value*360/1365
-    bms->temp.it_volt = adc_raw*360/1365;
+    bms->temp.it_volt = adc_raw * 360 / 1365;
 
     // Temp = Tempv*1000/1.8527 - 273.15
-    bms->temp.it_degc = 1000*(bms->temp.it_volt/1.8527 - 273.15);
+    bms->temp.it_degc = 100 * (bms->temp.it_volt / 1.8527 - 273.15);
 
     // External temperature 1
     adc_raw = isl94202_getExternalTemp1();
-    bms->temp.xt1_volt = adc_raw*360/1365/2;
-    bms->temp.xt1_degc = interpolate(temp_volt, temp_degc, ARRAY_SIZE(temp_degc), bms->temp.xt1_volt);
-
+    bms->temp.xt1_volt = adc_raw * 360 / 1365 / 2;
+    bms->temp.xt1_degc = interpolateTemp(bms->temp.xt1_volt);
 
     // External temperature 2 (used for MOSFET temperature sensing)
     adc_raw = isl94202_getExternalTemp2();
-    bms->temp.xt2_volt = adc_raw*360/1365/2;
-    bms->temp.xt2_degc = interpolate(temp_volt, temp_degc, ARRAY_SIZE(temp_degc), bms->temp.xt2_volt);
+    bms->temp.xt2_volt = adc_raw * 360 / 1365 / 2;
+    bms->temp.xt2_degc = interpolateTemp(bms->temp.xt2_volt);
 }
 
 #if 0

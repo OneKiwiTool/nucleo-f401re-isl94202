@@ -40,7 +40,7 @@
 #define ISL94202_UVLO                   0x0
 #define ISL94202_UVLO_MASK              (0xFFF << ISL94202_UVLO)
 
-//End-of-Charge Threshold EOC - R/W
+// End-of-Charge Threshold EOC - R/W
 #define REG_ISL94202_EOC                0x0C
 #define ISL94202_EOC                    0x0
 #define ISL94202_EOC_MASK               (0xFFF << ISL94202_EOC)
@@ -118,7 +118,7 @@
 #define ISL94202_CBMAXD                 0x0
 #define ISL94202_CBMAXD_MASK            (0xFFF << ISL94202_CBMAXD)
 
-//  Cell Balance On-Time - R/W
+// Cell Balance On-Time - R/W
 #define REG_ISL94202_CBON               0x24
 #define ISL94202_CBON                   0x0 // Cell Balance On Time
 #define ISL94202_CBON_MASK              (0x3FF << ISL94202_CBON)

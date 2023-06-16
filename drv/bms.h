@@ -178,23 +178,23 @@ typedef struct
 
 typedef struct
 {
-    uint16_t v_sense;
-    uint16_t i_sense;
-    uint16_t r_sense;
+    uint16_t v_sense;       //mV
+    uint16_t i_sense;       //mA
+    uint16_t r_sense;       //uOhm
     uint16_t gain;
 } BmsCurrent;
 
 typedef struct
 {
-    uint16_t it_volt;
+    int16_t it_volt;        //mV
+    int16_t it_degc;        //100*degC
     uint16_t it_tgainv;
-    uint16_t it_degc;
-    uint16_t xt1_volt;
+    int16_t xt1_volt;       //mV
+    int16_t xt1_degc;       //100*degC
     uint16_t xt1_tgainv;
-    uint16_t xt1_degc;
-    uint16_t xt2_volt;
+    int16_t xt2_volt;       //mV
+    int16_t xt2_degc;       //100*degC
     uint16_t xt2_tgainv;
-    uint16_t xt2_degc;
 } BmsTemperature;
 
 typedef struct

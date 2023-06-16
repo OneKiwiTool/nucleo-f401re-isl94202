@@ -42,6 +42,9 @@ uint16_t isl94202_getOverVoltRecovery(void)
     i2c_read_registers(BMS_ADDR, REG_ISL94202_OVR, buffer, 2);
     buffer[1] = buffer[1] & 0x0F;
     data = (uint16_t)((buffer[1] << 8)|buffer[0]);
+    // Vcell_OVR = value*1.8*8/(4095*3)
+    // mVcell_OVR = value*1.8*8*1000/(4095*3)
+    //            = value*4800/4095 = value*320/273
     return data;
 }
 
